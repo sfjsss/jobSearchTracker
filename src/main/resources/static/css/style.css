@@ -1,0 +1,58 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    /* border: 1px solid red; */
+}
+
+button,
+a{
+    width: 100px;
+}
+
+h1{
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.red{
+    color: red;
+}
+
+#container{
+    width: 30%;
+    margin: 10vh auto;
+    min-height: 100px;
+}
+
+#container h2{
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+#container #signInRegisterWindow{
+    padding: 30px;
+}
+
+#container #signInRegisterWindow form .radioBtnContainer{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#container #signInRegisterWindow p{
+    text-align: center;
+}
+
+#container #signInRegisterWindow p.error{
+    text-align: left;
+}
+
+#container #signInRegisterWindow .btnContainer{
+    text-align: center;
+    margin-top: 30px;
+}
+
+#container #signInRegisterWindow .anchorContainer{
+    text-align: center;
+}
