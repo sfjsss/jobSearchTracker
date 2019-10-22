@@ -51,8 +51,6 @@ public class Application {
 	
 	private String status;
 	
-	private String notes;
-	
 	//time stamp
 	
 	@Column(updatable = false)
@@ -75,6 +73,9 @@ public class Application {
 	
 	@OneToMany(mappedBy = "application", fetch = FetchType.LAZY)
 	private List<Reminder> reminders;
+	
+	@OneToMany(mappedBy = "application", fetch = FetchType.LAZY)
+	private List<Note> notes;
 	
 	//constructor
 	
@@ -172,14 +173,6 @@ public class Application {
 		this.status = status;
 	}
 
-	public String getNotes() {
-		return notes;
-	}
-
-	public void setNotes(String notes) {
-		this.notes = notes;
-	}
-
 	public Date getCreatedAt() {
 		return createdAt;
 	}
@@ -212,8 +205,24 @@ public class Application {
 		this.reminders = reminders;
 	}
 	
-	//time stamp generation
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public List<Note> getNotes() {
+		return notes;
+	}
+
+	public void setNotes(List<Note> notes) {
+		this.notes = notes;
+	}
 	
+	//time stamp generation
+
 	@PrePersist
 	protected void onCreate() {
 		this.createdAt = new Date();
