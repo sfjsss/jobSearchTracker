@@ -103,19 +103,23 @@
                         <tr>
                             <th scope="col">Status</th>
                             <th scope="col">Company</th>
-                            <th scope="col">Date</th>
-                            <th scope="col">Position</th>
+                            <th scope="col">Submitted Date</th>
+                            <th scope="col">Job Title</th>
                             <th scope="col">Location</th>
+                            <th scope="col">Latest Note</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                            <td>Mark</td>
-                            <td>Mark</td>
-                        </tr>
+                        <c:forEach items="${user.applications}" var="application">
+                            <tr>
+                                <td><c:out value="${application.status}"/></td>
+                                <td><c:out value="${application.companyName}"/></td>
+                                <td><c:out value="${application.dateOfSubmission}"/></td>
+                                <td><c:out value="${application.jobTitle}"/></td>
+                                <td><c:out value="${application.location}, ${application.state}"/></td>
+                                <td><c:out value="${application.notes.get(application.notes.size()-1)}"/></td>
+                            </tr>
+                        </c:forEach>
                     </tbody>
                 </table>
             </div>
