@@ -73,7 +73,7 @@
                 </form:form>
                 <p>OR</p>
                 <div class="anchorContainer">
-                    <a href="/login" class="btn btn-primary">Login</a>
+                    <a href="/login" class="btn btn-outline-primary">Login</a>
                 </div>
             </div>
         </div>

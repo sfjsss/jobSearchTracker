@@ -38,7 +38,7 @@
                 </form>
                 <p>OR</p>
                 <div class="anchorContainer">
-                    <a href="/register" class="btn btn-primary">Register</a>
+                    <a href="/register" class="btn btn-outline-primary">Register</a>
                 </div>
             </div>
         </div>
