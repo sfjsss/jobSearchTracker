@@ -1,5 +1,6 @@
 package com.alan.jobSearchTracker.models;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -19,6 +20,8 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 @Table(name = "applications")
 public class Application {
@@ -34,6 +37,7 @@ public class Application {
 	
 	private String jobPostLink;
 	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date dateOfSubmission;
 	
 	@Size(min = 1, message = "this field cannot be empty")
