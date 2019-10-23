@@ -49,6 +49,13 @@ public class ApplicationService {
 		return applicationRepo.findAppByStatusAndTime(status, fromDate, endDate);
 	}
 	
+	public List<Application> findAppByKeyword(String keyword) {
+		return applicationRepo.findAppByKeyword(keyword);
+	}
+	
+	
+	
+	
 	
 	
 	

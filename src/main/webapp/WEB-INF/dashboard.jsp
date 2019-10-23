@@ -45,9 +45,9 @@
 
             <div id="overview">
                 <div id="statsAndShare">
-                    <h3>You have submitted <span class="specialBlue"><c:out value="${user.applications.size()}"/> applications</span> in total. Add a new application</h3>
+                    <h5>You have submitted <span class="specialBlue"><c:out value="${user.applications.size()}"/> applications</span> in total. Add a new application</h5>
                     <button class="btn btn-success" type="button" data-toggle="modal" data-target="#addApplication">Add Application</button>
-                    <h3>or share your progress through a generated link</h3>
+                    <h5>or share your progress through a generated link</h5>
                     <a href="#" class="btn btn-primary">Link</a>
                 </div>
                 <div id="progressBars">
@@ -56,7 +56,7 @@
                             <div class="progress" id="aProgress"></div>
                             <div class="content"></div>
                         </div>
-                        <h3>Weekly Goal for Application: <c:out value="${thisWeekApps.size()}"/>/<c:out value="${user.weeklyJobApplicationGoal}"/></h3>
+                        <h5>Weekly Goal for Application: <c:out value="${thisWeekApps.size()}"/>/<c:out value="${user.weeklyJobApplicationGoal}"/></h5>
                         <p id="numOfThisWeekApps" class="hiddenData"><c:out value="${thisWeekApps.size()}"/></p>
                         <p id="weeklyGoalForApps" class="hiddenData"><c:out value="${user.weeklyJobApplicationGoal}"/></p>
                         <!-- <a href="#" class="btn btn-outline-primary changeBtn">Change</a> -->
@@ -68,7 +68,7 @@
                             <div class="progress" id="eProgress"></div>
                             <div class="content"></div>
                         </div>
-                        <h3>Weekly Goal for Event: 2/2</h3>
+                        <h5>Weekly Goal for Event: 2/2</h5>
                         <!-- <a href="#" class="btn btn-outline-primary changeBtn">Change</a> -->
                         <button class="btn btn-outline-primary changeBtn" type="button" data-toggle="modal" data-target="#changeWeeklyGoals">Change</button>
                     </div>
@@ -77,10 +77,12 @@
 
             <div id="content">
                 <p class="red"><c:out value="${filterError}"/></p>
+                <p class="red" id="searchError"><c:out value="${searchError}"/></p>
+                
                 <div id="filtersAndSearch">
                     <!-- filter start -->
                     <form action="/filterApplications" method="POST" class="form-inline">
-                        <label class="my-1 mr-2" for="status">Application Status</label>
+                        <label class="my-1 mr-2" for="status">Status</label>
                         <select class="custom-select my-1 mr-sm-2" id="status" name="status">
                             <option selected value="all">Choose..</option>
                             <option value="submitted">Submitted</option>
@@ -101,8 +103,8 @@
                     </form>
                     <!-- filter end -->
 
-                    <form class="form-inline my-2 my-lg-0">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <form class="form-inline my-2 my-lg-0" method="POST" action="/searchApplications">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="keyword">
                         <button class="btn btn-primary my-2 my-sm-0" type="submit">Search</button>
                     </form>
                 </div>
