@@ -64,14 +64,14 @@ h3{
 
 #overview,
 #content{
-    margin-top: 30px;
+    /* margin-top: 10px; */
     margin-bottom: 30px;
     padding: 20px;
 }
 
 #statsAndShare{
     display: flex;
-    margin-bottom: 30px;
+    margin-bottom: 60px;
 }
 
 #statsAndShare h3{
