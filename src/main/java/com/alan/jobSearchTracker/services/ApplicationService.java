@@ -1,5 +1,7 @@
 package com.alan.jobSearchTracker.services;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 import com.alan.jobSearchTracker.models.Application;
@@ -17,4 +19,24 @@ public class ApplicationService {
 	public Application newApplication(Application app) {
 		return applicationRepo.save(app);
 	}
+	
+	public Application findApplication(Long id) {
+		Optional<Application> app = applicationRepo.findById(id);
+		
+		if (app.isPresent()) {
+			return app.get();
+		}
+		else {
+			return null;
+		}
+	}
+	
+	public Application updateApplication(Application app) {
+		return applicationRepo.save(app);
+	}
+	
+	
+	
+	
+	
 }

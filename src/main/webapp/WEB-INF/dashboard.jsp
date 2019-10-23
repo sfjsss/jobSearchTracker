@@ -8,7 +8,8 @@
         <meta charset="UTF-8">
         <title>Job Search Tracker</title>
 
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
+        <link rel="stylesheet" href="/bootstrap-4.3.1-dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="/css/dashboard.css">
     </head>
     <body>
@@ -102,7 +103,7 @@
                     </form>
                 </div>
 
-                <table class="table table-striped">
+                <table class="table table-striped" id="appTable">
                     <thead>
                         <tr>
                             <th scope="col">Status</th>
@@ -117,7 +118,21 @@
                     <tbody>
                         <c:forEach items="${user.applications}" var="application">
                             <tr>
-                                <td><c:out value="${application.status}"/></td>
+                                <td>
+                                    <form action="/changeStatus" method="POST">
+                                        <input type="hidden" name="applicationId" value="${application.id}">
+                                        <select name="status" class="form-control" onchange="this.form.submit()">
+                                            <option value="none" selected disabled hidden><c:out value="${application.status}"/></option>
+                                            
+                                            <option value="submitted">Submitted</option>
+                                            <option value="reachedOut">Reached Out</option>
+                                            <option value="interview">Interview</option>
+                                            <option value="accepted">Accepted</option>
+                                            <option value="rejected">Rejected</option>
+                                            <option value="withdrawn">Withdrawn</option>
+                                        </select>
+                                    </form>
+                                </td>
                                 <td><c:out value="${application.companyName}"/></td>
                                 <td><c:out value="${application.dateOfSubmission}"/></td>
                                 <td><c:out value="${application.jobTitle}"/></td>
