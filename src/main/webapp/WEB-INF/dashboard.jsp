@@ -45,7 +45,7 @@
             <div id="overview">
                 <div id="statsAndShare">
                     <h3>You have submitted <span class="specialBlue"><c:out value="${user.applications.size()}"/> applications</span> in total. Add a new application</h3>
-                    <a href="#" class="btn btn-success">Add Application</a>
+                    <button class="btn btn-success" type="button" data-toggle="modal" data-target="#addApplication">Add Application</button>
                     <h3>or share your progress through a generated link</h3>
                     <a href="#" class="btn btn-primary">Link</a>
                 </div>
@@ -56,7 +56,7 @@
                             <div class="content"></div>
                         </div>
                         <h3>Weekly Goal for Application: 10/10</h3>
-                        <a href="#" class="btn btn-outline-primary">Change</a>
+                        <a href="#" class="btn btn-outline-primary changeBtn">Change</a>
                     </div>
 
                     <div id="eventBar">
@@ -65,7 +65,7 @@
                             <div class="content"></div>
                         </div>
                         <h3>Weekly Goal for Event: 2/2</h3>
-                        <a href="#" class="btn btn-outline-primary">Change</a>
+                        <a href="#" class="btn btn-outline-primary changeBtn">Change</a>
                     </div>
                 </div>
             </div>
@@ -107,6 +107,7 @@
                             <th scope="col">Job Title</th>
                             <th scope="col">Location</th>
                             <th scope="col">Latest Note</th>
+                            <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -116,14 +117,86 @@
                                 <td><c:out value="${application.companyName}"/></td>
                                 <td><c:out value="${application.dateOfSubmission}"/></td>
                                 <td><c:out value="${application.jobTitle}"/></td>
-                                <td><c:out value="${application.location}, ${application.state}"/></td>
-                                <td><c:out value="${application.notes.get(application.notes.size()-1)}"/></td>
+                                <td><c:out value="${application.city} ${application.state}"/></td>
+                                <td>
+                                    <c:if test="${application.notes.size() == 0}">
+                                        N/A
+                                    </c:if>
+                                    <c:if test="${application.notes.size() > 0}">
+                                        <c:out value="${application.notes.get(application.notes.size())}"/>
+                                    </c:if>
+                                </td>
+                                <td><a href="#">Edit</a></td>
                             </tr>
                         </c:forEach>
                     </tbody>
                 </table>
             </div>
         
+
+            <div class="modal fade" id="addApplication" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Add new application</h5>
+                        <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span> -->
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form:form method="post" action="/applications" modelAttribute="application">
+                            <p id="modalError"><c:out value="${error}"/></p>
+                            <form:input path="status" type="hidden" value="submitted"/>
+                            <div class="form-group">
+                                <form:label path="companyName" for="companyName" class="col-form-label">Company Name*:</form:label>
+                                <form:input path="companyName" type="text" class="form-control" id="companyName"/>
+                                <form:errors path="companyName" class="red"/>
+                            </div>
+                            <div class="form-group">
+                                <form:label path="jobPostLink" for="jobPostLink" class="col-form-label">Job Post Link:</form:label>
+                                <form:input path="jobPostLink" type="text" class="form-control" id="jobPostLink"/>
+                            </div>
+                            <div class="form-group">
+                                <form:label path="dateOfSubmission" for="dateOfSubmission" class="col-form-label">Date of Submission:</form:label>
+                                <form:input path="dateOfSubmission" type="date" class="form-control" id="dateOfSubmission"/>
+                                <form:errors path="dateOfSubmission" class="red"/>
+                            </div>
+                            <div class="form-group">
+                                <form:label path="jobTitle" for="jobTitle" class="col-form-label">Job Title*:</form:label>
+                                <form:input path="jobTitle" type="text" class="form-control" id="jobTitle"/>
+                                <form:errors path="jobTitle" class="red"/>
+                            </div>
+                            <div class="form-group">
+                                <form:label path="city" for="city" class="col-form-label">City:</form:label>
+                                <form:input path="city" type="text" class="form-control" id="city"/>
+                            </div>
+                            <div class="form-group">
+                                <form:label path="state" for="state" class="col-form-label">State:</form:label>
+                                <form:input path="state" type="text" class="form-control" id="state"/>
+                            </div>
+                            <div class="form-group">
+                                <form:label path="resumeLink" for="resumeLink" class="col-form-label">Resume Link:</form:label>
+                                <form:input path="resumeLink" type="text" class="form-control" id="resumeLink"/>
+                            </div>
+                            <div class="form-group">
+                                <form:label path="coverLetterLink" for="coverLetterLink" class="col-form-label">Cover Letter Link:</form:label>
+                                <form:input path="coverLetterLink" type="text" class="form-control" id="coverLetterLink"/>
+                            </div>
+                            <div class="form-group">
+                                <form:label path="coverLetter" for="coverLetter" class="col-form-label">Cover Letter:</form:label>
+                                <form:textarea path="coverLetter" class="form-control" id="coverLetter"></form:textarea>
+                            </div>
+                            <div class="form-group formBtnDiv">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Add</button>
+                            </div>
+                        </form:form>
+                    </div>
+                    
+                    </div>
+                </div>
+            </div>
+
         </div>
 
 
