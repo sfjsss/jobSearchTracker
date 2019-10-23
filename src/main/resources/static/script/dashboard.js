@@ -1,9 +1,19 @@
 $(document).ready(function() {
     console.log("js is working");
-    $(".progress").animate({width: "100%"}, 1000);
 
-    console.log($("#modalError").html());
+    let numOfThisWeekApps = $("#numOfThisWeekApps").html();
+    let weeklyGoalForApps = $("#weeklyGoalForApps").html();
+    let aProgressBarPercent = numOfThisWeekApps/weeklyGoalForApps*100;
+    let aProgressBarPercentInStr = aProgressBarPercent + "%";
+
+    $("#aProgress").animate({width: aProgressBarPercentInStr}, 1000);
+    $("#eProgress").animate({width: "80%"}, 1000);
+
     if ($("#modalError").html()) {
         $('#addApplication').modal('show');
+    };
+
+    if ($("#flashError").html()) {
+        $('#changeWeeklyGoals').modal('show');
     };
 })

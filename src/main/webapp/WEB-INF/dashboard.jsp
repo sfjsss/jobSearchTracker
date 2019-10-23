@@ -52,20 +52,24 @@
                 <div id="progressBars">
                     <div id="applicationBar">
                         <div id='applicationProgress'>
-                            <div class="progress"></div>
+                            <div class="progress" id="aProgress"></div>
                             <div class="content"></div>
                         </div>
-                        <h3>Weekly Goal for Application: 10/10</h3>
-                        <a href="#" class="btn btn-outline-primary changeBtn">Change</a>
+                        <h3>Weekly Goal for Application: <c:out value="${thisWeekApps.size()}"/>/<c:out value="${user.weeklyJobApplicationGoal}"/></h3>
+                        <p id="numOfThisWeekApps" class="hiddenData"><c:out value="${thisWeekApps.size()}"/></p>
+                        <p id="weeklyGoalForApps" class="hiddenData"><c:out value="${user.weeklyJobApplicationGoal}"/></p>
+                        <!-- <a href="#" class="btn btn-outline-primary changeBtn">Change</a> -->
+                        <button class="btn btn-outline-primary changeBtn" type="button" data-toggle="modal" data-target="#changeWeeklyGoals">Change</button>
                     </div>
 
                     <div id="eventBar">
                         <div id='eventProgress'>
-                            <div class="progress"></div>
+                            <div class="progress" id="eProgress"></div>
                             <div class="content"></div>
                         </div>
                         <h3>Weekly Goal for Event: 2/2</h3>
-                        <a href="#" class="btn btn-outline-primary changeBtn">Change</a>
+                        <!-- <a href="#" class="btn btn-outline-primary changeBtn">Change</a> -->
+                        <button class="btn btn-outline-primary changeBtn" type="button" data-toggle="modal" data-target="#changeWeeklyGoals">Change</button>
                     </div>
                 </div>
             </div>
@@ -139,13 +143,10 @@
                     <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Add new application</h5>
-                        <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span> -->
-                        </button>
                     </div>
                     <div class="modal-body">
                         <form:form method="post" action="/applications" modelAttribute="application">
-                            <p id="modalError"><c:out value="${error}"/></p>
+                            <p id="modalError" class="hiddenData"><c:out value="${error}"/></p>
                             <form:input path="status" type="hidden" value="submitted"/>
                             <div class="form-group">
                                 <form:label path="companyName" for="companyName" class="col-form-label">Company Name*:</form:label>
@@ -157,7 +158,7 @@
                                 <form:input path="jobPostLink" type="text" class="form-control" id="jobPostLink"/>
                             </div>
                             <div class="form-group">
-                                <form:label path="dateOfSubmission" for="dateOfSubmission" class="col-form-label">Date of Submission:</form:label>
+                                <form:label path="dateOfSubmission" for="dateOfSubmission" class="col-form-label">Date of Submission*:</form:label>
                                 <form:input path="dateOfSubmission" type="date" class="form-control" id="dateOfSubmission"/>
                                 <form:errors path="dateOfSubmission" class="red"/>
                             </div>
@@ -191,6 +192,36 @@
                                 <button type="submit" class="btn btn-primary">Add</button>
                             </div>
                         </form:form>
+                    </div>
+                    
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="changeWeeklyGoals" tabindex="-1">
+                <p class="hiddenData" id="flashError"><c:out value="${flashError}"/></p>
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Change the weekly goal</h5>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" action="/weeklyGoals">
+                            <div class="form-group">
+                                <label name="appWeeklyGoal" for="appWeeklyGoal" class="col-form-label">Weekly Goal for Application:</label>
+                                <input name="appWeeklyGoal" type="number" class="form-control" id="appWeeklyGoal" value="${user.weeklyJobApplicationGoal}"/>
+                                <p class="red"><c:out value="${appWeeklyGoalError}"/></p>
+                            </div>
+                            <div class="form-group">
+                                <label name="eventWeeklyGoal" for="eventWeeklyGoal" class="col-form-label">Weekly Goal for Event:</label>
+                                <input name="eventWeeklyGoal" type="number" class="form-control" id="eventWeeklyGoal" value="2"/>
+                                <p class="red"><c:out value="${eventWeeklyGoalError}"/></p>
+                            </div>
+                            <div class="form-group formBtnDiv">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Change</button>
+                            </div>
+                        </form>
                     </div>
                     
                     </div>

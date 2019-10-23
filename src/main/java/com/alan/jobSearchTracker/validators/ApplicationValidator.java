@@ -26,6 +26,9 @@ public class ApplicationValidator implements Validator {
 				errors.rejectValue("dateOfSubmission", "Valid");
 			}
 		}
+		else {
+			errors.rejectValue("dateOfSubmission", "Present");
+		}
 	}
 
 }

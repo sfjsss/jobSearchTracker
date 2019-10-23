@@ -121,7 +121,7 @@ table{
     margin-top: 30px;
 }
 
-#modalError{
+.hiddenData{
     display: none;
 }
 
