@@ -37,20 +37,20 @@ public class ApplicationService {
 		return applicationRepo.save(app);
 	}
 	
-	public List<Application> findAppByStatus(String status) {
-		return applicationRepo.findAppByStatus(status);
+	public List<Application> findAppByStatus(String status, Long userId) {
+		return applicationRepo.findAppByStatus(status, userId);
 	}
 	
-	public List<Application> findAppByTime(Date fromDate, Date endDate) {
-		return applicationRepo.findAppByTime(fromDate, endDate);
+	public List<Application> findAppByTime(Date fromDate, Date endDate, Long userId) {
+		return applicationRepo.findAppByTime(fromDate, endDate, userId);
 	}
 	
-	public List<Application> findAppByStatusAndTime(String status, Date fromDate, Date endDate) {
-		return applicationRepo.findAppByStatusAndTime(status, fromDate, endDate);
+	public List<Application> findAppByStatusAndTime(String status, Date fromDate, Date endDate, Long userId) {
+		return applicationRepo.findAppByStatusAndTime(status, fromDate, endDate, userId);
 	}
 	
-	public List<Application> findAppByKeyword(String keyword) {
-		return applicationRepo.findAppByKeyword(keyword);
+	public List<Application> findAppByKeyword(String keyword, Long userId) {
+		return applicationRepo.findAppByKeyword(keyword, userId);
 	}
 	
 	

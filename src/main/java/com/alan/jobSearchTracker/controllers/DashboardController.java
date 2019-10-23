@@ -93,7 +93,6 @@ public class DashboardController {
 	public String filterApplications(@RequestParam("status") String status, @RequestParam("fromDate") String fromDate, @RequestParam("endDate") String endDate, RedirectAttributes ra) {
 		
 		if (!status.equals("all") && fromDate.equals("") && endDate.equals("")) {
-			System.out.println("first cond is hit");
 			return "redirect:/filterAppResults?status=" + status;
 		}
 		else if (status.equals("all") && !fromDate.equals("") && !endDate.equals("")) {
@@ -126,24 +125,25 @@ public class DashboardController {
 			return "redirect:/login";
 		}
 		
+		Long userId = (Long) session.getAttribute("userId");
 		User u = (User) session.getAttribute("user");
 		List<Application> searchResults = new ArrayList<Application>();
 		
 		if (status != null && fromDate == null && endDate == null) {
-			searchResults = appService.findAppByStatus(status);
+			searchResults = appService.findAppByStatus(status, userId);
 		}
 		else if (status == null && fromDate != null && endDate != null) {
 			Date fd = new SimpleDateFormat("yyyy-MM-dd").parse(fromDate);
 			Date ed = new SimpleDateFormat("yyyy-MM-dd").parse(endDate);
-			searchResults = appService.findAppByTime(fd, ed);
+			searchResults = appService.findAppByTime(fd, ed, userId);
 		}
 		else if (status != null && fromDate != null && endDate != null) {
 			Date fd = new SimpleDateFormat("yyyy-MM-dd").parse(fromDate);
 			Date ed = new SimpleDateFormat("yyyy-MM-dd").parse(endDate);
-			searchResults = appService.findAppByStatusAndTime(status, fd, ed);
+			searchResults = appService.findAppByStatusAndTime(status, fd, ed, userId);
 		}
 		else {
-			List<Application> results = appService.findAppByKeyword(keyword);
+			List<Application> results = appService.findAppByKeyword(keyword, userId);
 			searchResults.addAll(results);
 		}
 		model.addAttribute("searchResults", searchResults);
