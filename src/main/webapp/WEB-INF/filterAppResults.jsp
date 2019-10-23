@@ -121,7 +121,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach items="${user.applications}" var="application">
+                        <c:forEach items="${searchResults}" var="application">
                             <tr>
                                 <td>
                                     <form action="/changeStatus" method="POST">

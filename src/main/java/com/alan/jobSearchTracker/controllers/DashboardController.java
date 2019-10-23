@@ -1,7 +1,9 @@
 package com.alan.jobSearchTracker.controllers;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -16,15 +18,18 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.alan.jobSearchTracker.models.Application;
 import com.alan.jobSearchTracker.models.User;
+import com.alan.jobSearchTracker.services.ApplicationService;
 import com.alan.jobSearchTracker.services.UserService;
 
 @Controller
 public class DashboardController {
 	
 	private final UserService userService;
+	private final ApplicationService appService;
 	
-	public DashboardController(UserService userService) {
+	public DashboardController(UserService userService, ApplicationService appService) {
 		this.userService = userService;
+		this.appService = appService;
 	}
 
 	@RequestMapping("/dashboard")
@@ -84,7 +89,51 @@ public class DashboardController {
 		return "redirect:/dashboard";
 	}
 	
+	@RequestMapping(value = "/filterApplications", method = RequestMethod.POST)
+	public String filterApplications(@RequestParam("status") String status, @RequestParam("fromDate") String fromDate, @RequestParam("endDate") String endDate, RedirectAttributes ra) {
+		
+		if (!status.equals("all") && fromDate.equals("") && endDate.equals("")) {
+			System.out.println("first cond is hit");
+			return "redirect:/filterAppResults?status=" + status;
+		}
+		else if (status.equals("all") && !fromDate.equals("") && !endDate.equals("")) {
+			return "redirect:/filterAppResults?fromDate=" + fromDate + "&endDate=" + endDate;
+		}
+		else if (!status.equals("all") && !fromDate.equals("") && !endDate.equals("")) {
+			return "redirect:/filterAppResults?status=" + status + "&fromDate=" + fromDate + "&endDate=" +endDate;
+		}
+		else {
+			ra.addFlashAttribute("filterError", "please enter a valid condition");
+			return "redirect:/dashboard";
+		}
+	}
 	
+	@RequestMapping("/filterAppResults")
+	public String filterAppResults(@RequestParam(value = "status", required = false) String status, @RequestParam(value = "fromDate", required = false) String fromDate, @RequestParam(value = "endDate", required = false) String endDate, HttpSession session, Model model, @ModelAttribute("application") Application application) throws Exception{
+		
+		if (session.getAttribute("userId") == null) {
+			return "redirect:/login";
+		}
+		
+		User u = (User) session.getAttribute("user");
+		List<Application> searchResults = new ArrayList<Application>();
+		
+		if (status != null && fromDate == null && endDate == null) {
+			searchResults = appService.findAppByStatus(status);
+		}
+		else if (status == null && fromDate != null && endDate != null) {
+			Date fd = new SimpleDateFormat("yyyy-MM-dd").parse(fromDate);
+			Date ed = new SimpleDateFormat("yyyy-MM-dd").parse(endDate);
+			searchResults = appService.findAppByTime(fd, ed);
+		}
+		else {
+			Date fd = new SimpleDateFormat("yyyy-MM-dd").parse(fromDate);
+			Date ed = new SimpleDateFormat("yyyy-MM-dd").parse(endDate);
+			searchResults = appService.findAppByStatusAndTime(status, fd, ed);
+		}
+		model.addAttribute("searchResults", searchResults);
+		return "filterAppResults.jsp";
+	}
 	
 	
 	
