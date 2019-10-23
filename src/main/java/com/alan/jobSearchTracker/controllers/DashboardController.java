@@ -108,8 +108,19 @@ public class DashboardController {
 		}
 	}
 	
+	@RequestMapping(value = "/searchApplications", method = RequestMethod.POST)
+	public String searchApplications(@RequestParam("keyword") String keyword, RedirectAttributes ra) {
+		if (keyword.equals("")) {
+			ra.addFlashAttribute("searchError", "this field cannot be empty");
+			return "redirect:/dashboard";
+		}
+		else {
+			return "redirect:/filterAppResults?keyword=" + keyword;
+		}
+	}
+	
 	@RequestMapping("/filterAppResults")
-	public String filterAppResults(@RequestParam(value = "status", required = false) String status, @RequestParam(value = "fromDate", required = false) String fromDate, @RequestParam(value = "endDate", required = false) String endDate, HttpSession session, Model model, @ModelAttribute("application") Application application) throws Exception{
+	public String filterAppResults(@RequestParam(value = "status", required = false) String status, @RequestParam(value = "fromDate", required = false) String fromDate, @RequestParam(value = "endDate", required = false) String endDate, @RequestParam(value = "keyword", required = false) String keyword, HttpSession session, Model model, @ModelAttribute("application") Application application) throws Exception{
 		
 		if (session.getAttribute("userId") == null) {
 			return "redirect:/login";
@@ -126,10 +137,14 @@ public class DashboardController {
 			Date ed = new SimpleDateFormat("yyyy-MM-dd").parse(endDate);
 			searchResults = appService.findAppByTime(fd, ed);
 		}
-		else {
+		else if (status != null && fromDate != null && endDate != null) {
 			Date fd = new SimpleDateFormat("yyyy-MM-dd").parse(fromDate);
 			Date ed = new SimpleDateFormat("yyyy-MM-dd").parse(endDate);
 			searchResults = appService.findAppByStatusAndTime(status, fd, ed);
+		}
+		else {
+			List<Application> results = appService.findAppByKeyword(keyword);
+			searchResults.addAll(results);
 		}
 		model.addAttribute("searchResults", searchResults);
 		return "filterAppResults.jsp";
