@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.alan.jobSearchTracker.models.Application;
 import com.alan.jobSearchTracker.models.User;
@@ -39,4 +40,19 @@ public class ApplicationController {
 			return "redirect:/dashboard";
 		}
 	}
+	
+	@RequestMapping(value = "/changeStatus", method = RequestMethod.POST)
+	public String changeStatus(@RequestParam("status") String status, @RequestParam("applicationId") Long appId) {
+		Application app = applicationService.findApplication(appId);
+		app.setStatus(status);
+		applicationService.updateApplication(app);
+		return "redirect:/dashboard";
+	}
+	
+	
+	
+	
+	
+	
+	
 }
