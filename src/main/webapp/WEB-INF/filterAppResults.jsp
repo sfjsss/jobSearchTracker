@@ -150,7 +150,11 @@
                                         <c:out value="${application.notes.get(application.notes.size())}"/>
                                     </c:if>
                                 </td>
-                                <td><a href="#">Edit</a></td>
+                                <td>
+                                    <a href="#">Note</a> |
+                                    <a href="#">Update</a> |
+                                    <a href="#">Edit</a>
+                                </td>
                             </tr>
                         </c:forEach>
                     </tbody>
