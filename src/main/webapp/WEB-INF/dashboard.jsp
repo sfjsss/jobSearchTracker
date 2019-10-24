@@ -30,7 +30,7 @@
                     <a class="nav-link" href="#">Contacts</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Reminders(<c:if test="${user.reminders.size()>0}"><span class="red"><c:out value="${user.reminders.size()}"/></span></c:if><c:if test="${user.reminders.size()<=0}">0</c:if>)</a>
+                    <a class="nav-link" href="#">Reminders(<c:if test="${reminders.size()>0}"><span class="red"><c:out value="${reminders.size()}"/></span></c:if><c:if test="${reminders.size()<=0}">0</c:if>)</a>
                 </li>
                 </ul>
                 <ul class="navbar-nav ml-auto mr-5">

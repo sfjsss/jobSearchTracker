@@ -238,9 +238,9 @@ public class User {
 	public void setReminders(List<Reminder> reminders) {
 		this.reminders = reminders;
 	}
-	
-	//time stamp generation
 
+	//time stamp generation
+	
 	@PrePersist
 	protected void onCreate() {
 		this.createdAt = new Date();

@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.alan.jobSearchTracker.models.Application;
+import com.alan.jobSearchTracker.models.Reminder;
 import com.alan.jobSearchTracker.models.User;
 import com.alan.jobSearchTracker.services.ApplicationService;
+import com.alan.jobSearchTracker.services.ReminderService;
 import com.alan.jobSearchTracker.services.UserService;
 
 @Controller
@@ -26,10 +28,12 @@ public class DashboardController {
 	
 	private final UserService userService;
 	private final ApplicationService appService;
+	private final ReminderService reminderService;
 	
-	public DashboardController(UserService userService, ApplicationService appService) {
+	public DashboardController(UserService userService, ApplicationService appService, ReminderService reminderService) {
 		this.userService = userService;
 		this.appService = appService;
+		this.reminderService = reminderService;
 	}
 
 	@RequestMapping("/dashboard")
@@ -44,7 +48,10 @@ public class DashboardController {
 			u = userService.findUserById(userId);
 			session.setAttribute("user", u);
 			List<Application> apps = appService.findAppsByCreatedDesc(userId);
-			model.addAttribute("apps", apps);
+			session.setAttribute("apps", apps);
+			List<Reminder> reminders = reminderService.findActiveReminders(userId);
+			session.setAttribute("reminders", reminders);
+			
 			
 			Calendar m = Calendar.getInstance();
 			m.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
