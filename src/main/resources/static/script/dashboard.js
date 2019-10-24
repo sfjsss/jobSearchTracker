@@ -20,4 +20,8 @@ $(document).ready(function() {
     if ($("#editError").html()) {
         $('#editApplication').modal('show');
     };
+
+    if ($("#noteError").html()) {
+        $('#viewApplication').modal('show');
+    };
 })

@@ -149,11 +149,11 @@
                                         N/A
                                     </c:if>
                                     <c:if test="${application.notes.size() > 0}">
-                                        <c:out value="${application.notes.get(application.notes.size())}"/>
+                                        <c:out value="${application.notes.get(application.notes.size()-1).content}"/>
                                     </c:if>
                                 </td>
                                 <td>
-                                    <a href="#">Note</a> |
+                                    <a href="" data-toggle="modal" data-target="#viewApplication">View</a> |
                                     <a href="#">Reminder</a> |
                                     <a href="" data-toggle="modal" data-target="#editApplication">Edit</a>
                                 </td>
@@ -218,6 +218,47 @@
                                 </div>
                             </div>
                             <!-- edit application form ends -->
+
+                            <!-- view application starts -->
+                            <div class="modal fade" id="viewApplication" tabindex="-1">
+                                <p class="hiddenData" id="noteError"><c:out value="${noteError}"/></p>
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Detail of the application</h5>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Company Name: <c:out value="${application.companyName}"/></p>
+                                        <p>Job Post Link: <c:out value="${application.jobPostLink}"/></p>
+                                        <p>Date of Submission: <c:out value="${application.dateOfSubmission}"/></p>
+                                        <p>Job Title: <c:out value="${application.jobTitle}"/></p>
+                                        <p>Location: <c:out value="${application.city} ${application.state}"/></p>
+                                        <p>Resume Link: <c:out value="${application.resumeLink}"/></p>
+                                        <p>Cover Letter Link: <c:out value="${application.coverLetterLink}"/></p>
+                                        <p>Cover Letter: <c:out value="${application.coverLetter}"/></p>
+
+                                        <c:forEach items="${application.notes}" var="note">
+                                            <p>Note on <c:out value="${note.createdAt}"/>: <c:out value="${note.content}"/></p>
+                                        </c:forEach>
+
+                                        <form method="post" action="/addNote">
+                                            <input type="hidden" name="appId" value="${application.id}">
+                                            <div class="form-group">
+                                                <label for="note" class="col-form-label">Add a note</label>
+                                                <textarea name="note" class="form-control" id="note"></textarea>
+                                                <p class="red"><c:out value="${contentError}"/></p>
+                                            </div>
+                                            <div class="form-group formBtnDiv">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary">Add</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- view application ends-->
 
                         </c:forEach>
                     </tbody>
@@ -286,7 +327,7 @@
             <!-- addApplication ends -->
 
             
-
+            <!-- change weekly goal modal form starts -->
             <div class="modal fade" id="changeWeeklyGoals" tabindex="-1">
                 <p class="hiddenData" id="flashError"><c:out value="${flashError}"/></p>
                 <div class="modal-dialog">
@@ -316,6 +357,7 @@
                     </div>
                 </div>
             </div>
+            <!-- change weekly goal modal form ends-->
 
         </div>
 
