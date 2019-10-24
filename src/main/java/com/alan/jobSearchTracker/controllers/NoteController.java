@@ -26,7 +26,7 @@ public class NoteController {
 	public String addNote(@RequestParam("note") String note, RedirectAttributes ra, @RequestParam("appId") Long appId) {
 		if (note.length() < 1) {
 			ra.addFlashAttribute("contentError", "this field cannot be empty");
-			ra.addFlashAttribute("noteError", true);
+			ra.addFlashAttribute("noteError", "#viewApplication" + appId);
 			return "redirect:/dashboard";
 		}
 		else {

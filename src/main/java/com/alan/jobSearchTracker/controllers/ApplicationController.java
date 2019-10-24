@@ -2,6 +2,7 @@ package com.alan.jobSearchTracker.controllers;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -37,6 +38,9 @@ public class ApplicationController {
 		appValidator.validate(application, result);
 		if (result.hasErrors()) {
 			model.addAttribute("error", true);
+			
+			List<Application> apps = applicationService.findAppsByCreatedDesc((Long) session.getAttribute("userId"));
+			model.addAttribute("apps", apps);
 			return "dashboard.jsp";
 		}
 		else {
@@ -95,7 +99,7 @@ public class ApplicationController {
 			return "redirect:/dashboard";
 		}
 		else {
-			ra.addFlashAttribute("editError", true);
+			ra.addFlashAttribute("editError", "#editApplication" + appId);
 			return "redirect:/dashboard";
 		}
 		

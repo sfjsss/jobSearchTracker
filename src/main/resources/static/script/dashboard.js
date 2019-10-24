@@ -17,11 +17,19 @@ $(document).ready(function() {
         $('#changeWeeklyGoals').modal('show');
     };
 
-    if ($("#editError").html()) {
-        $('#editApplication').modal('show');
+    if ($("#editError").html() != "") {
+        let editModalId = $("#editError").html();
+        console.log(editModalId);
+        $(editModalId).modal('show');
     };
 
-    if ($("#noteError").html()) {
-        $('#viewApplication').modal('show');
+    if ($("#noteError").html() != "") {
+        let viewModalId = $("#noteError").html();
+        $(viewModalId).modal('show');
+    };
+
+    if ($("#reminderError").html() != "") {
+        let addReminderModalId = $("#reminderError").html();
+        $(addReminderModalId).modal('show');
     };
 })

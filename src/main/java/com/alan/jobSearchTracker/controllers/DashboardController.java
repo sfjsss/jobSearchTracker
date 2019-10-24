@@ -43,6 +43,8 @@ public class DashboardController {
 		else {
 			u = userService.findUserById(userId);
 			session.setAttribute("user", u);
+			List<Application> apps = appService.findAppsByCreatedDesc(userId);
+			model.addAttribute("apps", apps);
 			
 			Calendar m = Calendar.getInstance();
 			m.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);

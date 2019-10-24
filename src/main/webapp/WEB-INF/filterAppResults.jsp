@@ -151,15 +151,15 @@
                                     </c:if>
                                 </td>
                                 <td>
-                                    <a href="" data-toggle="modal" data-target="#viewApplication">View</a> |
-                                    <a href="#">Reminder</a> |
-                                    <a href="" data-toggle="modal" data-target="#editApplication">Edit</a>
+                                    <a href="" data-toggle="modal" data-target="#viewApplication${application.id}">View</a> |
+                                    <a href="" data-toggle="modal" data-target="#addReminder${application.id}">Reminder</a> |
+                                    <a href="" data-toggle="modal" data-target="#editApplication${application.id}">Edit</a>
                                 </td>
                             </tr>
 
                             <!-- edit application form starts -->
                             <p class="hiddenData" id="editError"><c:out value="${editError}"/></p>
-                            <div class="modal fade" id="editApplication" tabindex="-1">
+                            <div class="modal fade" id="editApplication${application.id}" tabindex="-1">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                     <div class="modal-header">
@@ -218,8 +218,8 @@
                             <!-- edit application form ends -->
 
                             <!-- view application starts -->
-                            <div class="modal fade" id="viewApplication" tabindex="-1">
-                                <p class="hiddenData" id="noteError"><c:out value="${noteError}"/></p>
+                            <p class="hiddenData" id="noteError"><c:out value="${noteError}"/></p>
+                            <div class="modal fade" id="viewApplication${application.id}" tabindex="-1">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                     <div class="modal-header">
@@ -257,6 +257,34 @@
                                 </div>
                             </div>
                             <!-- view application ends-->
+
+                            <!-- add reminder form starts -->
+                            <p class="hiddenData" id="reminderError"><c:out value="${reminderError}"/></p>
+                            <div class="modal fade" id="addReminder${application.id}" tabindex="-1">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Add a reminder</h5>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form method="post" action="/addReminder">
+                                            <input type="hidden" name="appId" value="${application.id}">
+                                            <div class="form-group">
+                                                <label name="remindDate" for="remindDate" class="col-form-label">Choose a date to remind:</label>
+                                                <input name="remindDate" type="date" class="form-control" id="remindDate"/>
+                                                <p class="red"><c:out value="${remindDateError}"/></p>
+                                            </div>
+                                            <div class="form-group formBtnDiv">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary">Set</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- add reminder form ends-->
 
                         </c:forEach>
                     </tbody>

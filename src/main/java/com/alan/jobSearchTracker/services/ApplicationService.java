@@ -53,7 +53,9 @@ public class ApplicationService {
 		return applicationRepo.findAppByKeyword(keyword, userId);
 	}
 	
-	
+	public List<Application> findAppsByCreatedDesc(Long userId) {
+		return applicationRepo.findAppsByCreatedAtDesc(userId);
+	}
 	
 	
 	
