@@ -24,4 +24,8 @@ $(document).ready(function() {
     if ($("#noteError").html()) {
         $('#viewApplication').modal('show');
     };
+
+    if ($("#reminderError").html()) {
+        $('#addReminder').modal('show');
+    };
 })
