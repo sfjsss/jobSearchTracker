@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "reminders")
@@ -25,6 +26,9 @@ public class Reminder {
 	private Long id;
 	
 	private Date reminderDate;
+	
+	@Size(min = 1)
+	private String message;
 	
 	//time stamp
 	
