@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -33,6 +34,8 @@ public class ApplicationController {
 		this.appValidator = appValidator;
 	}
 
+	//create new application
+	
 	@RequestMapping(value = "/applications", method = RequestMethod.POST)
 	public String createApplication(@Valid @ModelAttribute("application") Application application, BindingResult result, Model model, HttpSession session) {
 		appValidator.validate(application, result);
@@ -50,8 +53,10 @@ public class ApplicationController {
 		}
 	}
 	
+	//update application
+	
 	@RequestMapping(value = "/applications/{id}", method = RequestMethod.POST)
-	public String updateApplication(@PathVariable("id") Long appId, RedirectAttributes ra, @RequestParam("companyName") String companyName, @RequestParam("dateOfSubmission") String dateOfSubmission, @RequestParam("jobTitle") String jobTitle, @RequestParam("jobPostLink") String jobPostLink, @RequestParam("city") String city, @RequestParam("state") String state, @RequestParam("resumeLink") String resumeLink, @RequestParam("coverLetterLink") String coverLetterLink, @RequestParam("coverLetter") String coverLetter) throws Exception {
+	public String updateApplication(@PathVariable("id") Long appId, RedirectAttributes ra, @RequestParam("companyName") String companyName, @RequestParam("dateOfSubmission") String dateOfSubmission, @RequestParam("jobTitle") String jobTitle, @RequestParam("jobPostLink") String jobPostLink, @RequestParam("city") String city, @RequestParam("state") String state, @RequestParam("resumeLink") String resumeLink, @RequestParam("coverLetterLink") String coverLetterLink, @RequestParam("coverLetter") String coverLetter, HttpServletRequest request) throws Exception {
 		
 		//validation
 		boolean validation = true;
@@ -96,21 +101,25 @@ public class ApplicationController {
 			a.setCoverLetter(coverLetter);
 			
 			applicationService.updateApplication(a);
-			return "redirect:/dashboard";
+			String referer = request.getHeader("referer");
+			return "redirect:" + referer;
 		}
 		else {
 			ra.addFlashAttribute("editError", "#editApplication" + appId);
-			return "redirect:/dashboard";
+			String referer = request.getHeader("referer");
+			return "redirect:" + referer;
 		}
 		
 	}
 	
 	@RequestMapping(value = "/changeStatus", method = RequestMethod.POST)
-	public String changeStatus(@RequestParam("status") String status, @RequestParam("applicationId") Long appId) {
+	public String changeStatus(@RequestParam("status") String status, @RequestParam("applicationId") Long appId, HttpServletRequest request) {
 		Application app = applicationService.findApplication(appId);
 		app.setStatus(status);
 		applicationService.updateApplication(app);
-		return "redirect:/dashboard";
+		
+		String referer = request.getHeader("referer");
+		return "redirect:" + referer;
 	}
 	
 	
