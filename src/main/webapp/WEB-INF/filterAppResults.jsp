@@ -152,7 +152,7 @@
                                 </td>
                                 <td>
                                     <a href="#">Note</a> |
-                                    <a href="#">Update</a> |
+                                    <a href="#">Reminder</a> |
                                     <a href="" data-toggle="modal" data-target="#editApplication">Edit</a>
                                 </td>
                             </tr>
