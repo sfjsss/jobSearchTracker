@@ -99,7 +99,7 @@ public class ApplicationController {
 			return "redirect:/dashboard";
 		}
 		else {
-			ra.addFlashAttribute("editError", true);
+			ra.addFlashAttribute("editError", "#editApplication" + appId);
 			return "redirect:/dashboard";
 		}
 		

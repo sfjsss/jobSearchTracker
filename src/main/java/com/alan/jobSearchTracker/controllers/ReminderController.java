@@ -34,14 +34,14 @@ public class ReminderController {
 	@RequestMapping(value = "/addReminder", method = RequestMethod.POST)
 	public String newReminder(@RequestParam("appId") Long appId, @RequestParam("remindDate") String remindDate, RedirectAttributes ra, HttpSession session) throws Exception {
 		if (remindDate.length() < 1) {
-			ra.addFlashAttribute("reminderError", true);
+			ra.addFlashAttribute("reminderError", "#addReminder" + appId);
 			ra.addFlashAttribute("remindDateError", "this field cannot be empty");
 		}
 		else {
 			Date today = new Date();
 			Date rd = new SimpleDateFormat("yyyy-MM-dd").parse(remindDate);
 			if (rd.compareTo(today) <= 0) {
-				ra.addFlashAttribute("reminderError", true);
+				ra.addFlashAttribute("reminderError", "#addReminder" + appId);
 				ra.addFlashAttribute("remindDateError", "please enter a valid date");
 			}
 			else {
