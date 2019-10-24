@@ -16,4 +16,8 @@ $(document).ready(function() {
     if ($("#flashError").html()) {
         $('#changeWeeklyGoals').modal('show');
     };
+
+    if ($("#editError").html()) {
+        $('#editApplication').modal('show');
+    };
 })
