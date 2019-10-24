@@ -276,6 +276,11 @@
                                                 <input name="remindDate" type="date" class="form-control" id="remindDate"/>
                                                 <p class="red"><c:out value="${remindDateError}"/></p>
                                             </div>
+                                            <div class="form-group">
+                                                <label for="message" class="col-form-label">Reminder message:</label>
+                                                <textarea name="message" class="form-control" id="message"></textarea>
+                                                <p class="red"><c:out value="${messageError}"/></p>
+                                            </div>
                                             <div class="form-group formBtnDiv">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                                 <button type="submit" class="btn btn-primary">Set</button>
