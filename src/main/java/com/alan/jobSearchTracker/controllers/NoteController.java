@@ -1,5 +1,7 @@
 package com.alan.jobSearchTracker.controllers;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,11 +25,12 @@ public class NoteController {
 	}
 
 	@RequestMapping(value = "/addNote", method = RequestMethod.POST)
-	public String addNote(@RequestParam("note") String note, RedirectAttributes ra, @RequestParam("appId") Long appId) {
+	public String addNote(@RequestParam("note") String note, RedirectAttributes ra, @RequestParam("appId") Long appId, HttpServletRequest request) {
 		if (note.length() < 1) {
 			ra.addFlashAttribute("contentError", "this field cannot be empty");
 			ra.addFlashAttribute("noteError", "#viewApplication" + appId);
-			return "redirect:/dashboard";
+			String referer = request.getHeader("referer");
+			return "redirect:" + referer;
 		}
 		else {
 			Application a = appService.findApplication(appId);
@@ -35,7 +38,8 @@ public class NoteController {
 			newNote.setApplication(a);
 			newNote.setContent(note);
 			noteService.createNote(newNote);
-			return "redirect:/dashboard";
+			String referer = request.getHeader("referer");
+			return "redirect:" + referer;
 		}
 	}
 }
