@@ -3,6 +3,7 @@ package com.alan.jobSearchTracker.controllers;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -32,28 +33,46 @@ public class ReminderController {
 	}
 
 	@RequestMapping(value = "/addReminder", method = RequestMethod.POST)
-	public String newReminder(@RequestParam("appId") Long appId, @RequestParam("remindDate") String remindDate, RedirectAttributes ra, HttpSession session) throws Exception {
+	public String newReminder(@RequestParam("appId") Long appId, @RequestParam("remindDate") String remindDate, RedirectAttributes ra, HttpSession session, @RequestParam("message") String message, HttpServletRequest request) throws Exception {
+		
+		//validation
+		
+		boolean validation = true;
+		Date rd = new Date();
+		Date today = new Date();
+		
+		if (message.length() < 1) {
+			ra.addFlashAttribute("messageError", "this field cannot be empty");
+			validation = false;
+		}
+		
 		if (remindDate.length() < 1) {
-			ra.addFlashAttribute("reminderError", "#addReminder" + appId);
 			ra.addFlashAttribute("remindDateError", "this field cannot be empty");
+			validation = false;
 		}
 		else {
-			Date today = new Date();
-			Date rd = new SimpleDateFormat("yyyy-MM-dd").parse(remindDate);
+			rd = new SimpleDateFormat("yyyy-MM-dd").parse(remindDate);
 			if (rd.compareTo(today) <= 0) {
-				ra.addFlashAttribute("reminderError", "#addReminder" + appId);
 				ra.addFlashAttribute("remindDateError", "please enter a valid date");
-			}
-			else {
-				User u = userService.findUserById((Long) session.getAttribute("userId"));
-				Application a = appService.findApplication(appId);
-				Reminder r = new Reminder();
-				r.setReminderDate(rd);
-				r.setApplication(a);
-				r.setUser(u);
-				reminderService.create(r);
+				validation = false;
 			}
 		}
-		return "redirect:/dashboard";
+		
+		if (validation) {
+			User u = userService.findUserById((Long) session.getAttribute("userId"));
+			Application a = appService.findApplication(appId);
+			Reminder r = new Reminder();
+			r.setReminderDate(rd);
+			r.setMessage(message);
+			r.setApplication(a);
+			r.setUser(u);
+			reminderService.create(r);
+		}
+		else {
+			ra.addFlashAttribute("reminderError", "#addReminder" + appId);
+		}
+		
+		String referer = request.getHeader("referer");
+		return "redirect:" + referer;
 	}
 }

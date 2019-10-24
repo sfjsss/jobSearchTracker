@@ -102,8 +102,16 @@ public class Reminder {
 		this.application = application;
 	}
 	
-	//time stamp generation
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
 	
+	//time stamp generation
+
 	@PrePersist
 	protected void onCreate() {
 		this.createdAt = new Date();
