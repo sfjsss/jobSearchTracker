@@ -112,7 +112,7 @@
                                 <td><c:out value="${event.notes}"/></td>
                                 <td>
                                     <a href="" data-toggle="modal" data-target="#viewEvent${event.id}">View</a> |
-                                    <a href="" data-toggle="modal" data-target="#addReminder${application.id}">Contacts</a> |
+                                    <a href="" data-toggle="modal" data-target="#addContact${event.id}">Contacts</a> |
                                     <a href="" data-toggle="modal" data-target="#editEvent${event.id}">Edit</a>
                                 </td>
                             </tr>
@@ -184,30 +184,49 @@
                             </div>
                             <!-- view application ends-->
 
-                            <!-- add reminder form starts -->
-                            <p class="hiddenData" id="reminderError"><c:out value="${reminderError}"/></p>
-                            <div class="modal fade" id="addReminder${application.id}" tabindex="-1">
+                            <!-- add contact form starts -->
+                            <p class="hiddenData" id="contactError"><c:out value="${contactError}"/></p>
+                            <div class="modal fade" id="addContact${event.id}" tabindex="-1">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title">Add a reminder</h5>
+                                        <h5 class="modal-title">Add a contact</h5>
                                     </div>
                                     <div class="modal-body">
-                                        <c:forEach items="${application.reminders}" var="reminder">
-                                            <p>Date: <c:out value="${reminder.reminderDate}"/></p>
-                                            <p>Message: <c:out value="${reminder.message}"/></p>
+                                        <c:forEach items="${event.contacts}" var="contact">
+                                            <p>Name: <c:out value="${contact.name}"/></p>
+                                            <p>Number: <c:out value="${contact.number}"/></p>
+                                            <p>Email: <c:out value="${contact.email}"/></p>
+                                            <p>LinkedIn: <c:out value="${contact.linkedIn}"/></p>
+                                            <p>Description: <c:out value="${contact.description}"/></p>
+                                            <hr>
                                         </c:forEach>
-                                        <form method="post" action="/addReminder">
-                                            <input type="hidden" name="appId" value="${application.id}">
+                                        <form method="post" action="/addContact">
+                                            <input type="hidden" name="eventId" value="${event.id}">
                                             <div class="form-group">
-                                                <label name="remindDate" for="remindDate" class="col-form-label">Choose a date to remind:</label>
-                                                <input name="remindDate" type="date" class="form-control" id="remindDate"/>
-                                                <p class="red"><c:out value="${remindDateError}"/></p>
+                                                <label name="name" for="name" class="col-form-label">Name*:</label>
+                                                <input name="name" type="text" class="form-control" id="name"/>
+                                                <p class="red"><c:out value="${contactNameError}"/></p>
                                             </div>
                                             <div class="form-group">
-                                                <label for="message" class="col-form-label">Reminder message:</label>
-                                                <textarea name="message" class="form-control" id="message"></textarea>
-                                                <p class="red"><c:out value="${messageError}"/></p>
+                                                <label name="number" for="number" class="col-form-label">Number:</label>
+                                                <input name="number" type="text" class="form-control" id="number"/>
+                                                <p class="red"><c:out value="${numberError}"/></p>
+                                            </div>
+                                            <div class="form-group">
+                                                <label name="email" for="email" class="col-form-label">Email:</label>
+                                                <input name="email" type="email" class="form-control" id="email"/>
+                                                <p class="red"><c:out value="${emailError}"/></p>
+                                            </div>
+                                            <div class="form-group">
+                                                <label name="linkedIn" for="linkedIn" class="col-form-label">LinkedIn:</label>
+                                                <input name="linkedIn" type="text" class="form-control" id="linkedIn"/>
+                                                <p class="red"><c:out value="${linkedInError}"/></p>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="description" class="col-form-label">Description:</label>
+                                                <textarea name="description" class="form-control" id="description"></textarea>
+                                                <p class="red"><c:out value="${descriptionError}"/></p>
                                             </div>
                                             <div class="form-group formBtnDiv">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -219,7 +238,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- add reminder form ends-->
+                            <!-- add contact form ends-->
 
                         </c:forEach>
                     </tbody>

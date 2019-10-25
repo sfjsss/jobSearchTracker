@@ -37,6 +37,11 @@ $(document).ready(function() {
         $(addReminderModalId).modal('show');
     };
 
+    if ($("#contactError").html() != "") {
+        let addContactModalId = $("#contactError").html();
+        $(addContactModalId).modal("show");
+    };
+
     if ($("#eventModalError").html()) {
         $("#addEvent").modal("show");
     };
