@@ -25,4 +25,13 @@ public class ReminderService {
 		Date today = new Date();
 		return reminderRepo.findAllActiveReminders(today, userId);
 	}
+	
+	public void destroyReminder(Long id) {
+		reminderRepo.deleteById(id);
+	}
+	
+	public void destroyAllReminders(Long userId) {
+		Date today = new Date();
+		reminderRepo.clearAllReminders(today, userId);
+	}
 }

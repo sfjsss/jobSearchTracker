@@ -19,8 +19,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.alan.jobSearchTracker.models.Application;
+import com.alan.jobSearchTracker.models.Reminder;
 import com.alan.jobSearchTracker.models.User;
 import com.alan.jobSearchTracker.services.ApplicationService;
+import com.alan.jobSearchTracker.services.ReminderService;
 import com.alan.jobSearchTracker.validators.ApplicationValidator;
 
 @Controller
@@ -28,10 +30,12 @@ public class ApplicationController {
 	
 	private final ApplicationService applicationService;
 	private final ApplicationValidator appValidator;
+	private final ReminderService reminderService;
 	
-	public ApplicationController(ApplicationService applicationService, ApplicationValidator appValidator) {
+	public ApplicationController(ApplicationService applicationService, ApplicationValidator appValidator, ReminderService reminderService) {
 		this.applicationService = applicationService;
 		this.appValidator = appValidator;
+		this.reminderService = reminderService;
 	}
 
 	//create new application
@@ -113,7 +117,7 @@ public class ApplicationController {
 	}
 	
 	@RequestMapping(value = "/changeStatus", method = RequestMethod.POST)
-	public String changeStatus(@RequestParam("status") String status, @RequestParam("applicationId") Long appId, HttpServletRequest request) {
+	public String changeStatus(@RequestParam("status") String status, @RequestParam("applicationId") Long appId, HttpServletRequest request, HttpSession session) {
 		Application app = applicationService.findApplication(appId);
 		app.setStatus(status);
 		applicationService.updateApplication(app);
