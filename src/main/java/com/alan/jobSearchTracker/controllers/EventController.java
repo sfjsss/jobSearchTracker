@@ -66,7 +66,6 @@ public class EventController {
 		}
 		
 		session.setAttribute("thisWeekEvents", thisWeekEvents);
-		session.setAttribute("showFilteredEvents", false);
 		return "events.jsp";
 	}
 	
@@ -133,6 +132,18 @@ public class EventController {
 		}
 	}
 	
+	@RequestMapping(value = "/searchEvents", method = RequestMethod.POST)
+	public String searchEvents(@RequestParam("keyword") String keyword, RedirectAttributes ra, HttpServletRequest request) {
+		if (keyword.equals("")) {
+			ra.addFlashAttribute("searchError", "this field cannot be empty");
+			String referer = request.getHeader("referer");
+			return "redirect:" + referer;
+		}
+		else {
+			return "redirect:/filterEventResults?keyword=" + keyword;
+		}
+	}
+	
 	@RequestMapping("/filterEventResults")
 	public String filterEventResults(@RequestParam(value = "fromDate", required = false) String fromDate, @RequestParam(value = "endDate", required = false) String endDate, @RequestParam(value = "keyword", required = false) String keyword, HttpSession session, Model model, @ModelAttribute("event") Event event) throws Exception{
 		if (session.getAttribute("userId") == null) {
@@ -147,9 +158,11 @@ public class EventController {
 			Date ed = new SimpleDateFormat("yyyy-MM-dd").parse(endDate);
 			filteredEvents = eService.findEventsByTime(userId, fd, ed);
 		}
+		else {
+			filteredEvents = eService.findEventsByKeyword(userId, keyword);
+		}
 		
 		session.setAttribute("events", filteredEvents);
-		session.setAttribute("showFilteredEvents", true);
 		return "events.jsp";
 	}
 	

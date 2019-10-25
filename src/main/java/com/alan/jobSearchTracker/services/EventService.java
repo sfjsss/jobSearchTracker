@@ -43,4 +43,8 @@ public class EventService {
 	public List<Event> findEventsByTime(Long userId, Date fromDate, Date endDate) {
 		return eRepo.findEventsByTime(userId, fromDate, endDate);
 	}
+	
+	public List<Event> findEventsByKeyword(Long userId, String keyword) {
+		return eRepo.findByUserIdAndNameOrLocationContaining(userId, keyword, keyword);
+	}
 }
