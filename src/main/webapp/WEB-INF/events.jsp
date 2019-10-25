@@ -20,11 +20,11 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
+                <li class="nav-item">
                     <a class="nav-link" href="/dashboard">Job Applications<span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/events">Networking Events</a>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Networking Events</a>
                 </li>
                 <!-- <li class="nav-item">
                     <a class="nav-link" href="#">Contacts</a>
@@ -45,23 +45,13 @@
 
             <div id="overview">
                 <div id="statsAndShare">
-                    <h5>You have submitted <span class="specialBlue"><c:out value="${user.applications.size()}"/> applications</span> in total. Add a new application</h5>
-                    <button class="btn btn-success" type="button" data-toggle="modal" data-target="#addApplication">Add Application</button>
+                    <h5>You have attended <span class="specialBlue"><c:out value="${user.applications.size()}"/> events</span> in total. Add a new event</h5>
+                    <button class="btn btn-success" type="button" data-toggle="modal" data-target="#addApplication">Add Event</button>
                     <h5>or share your progress through a generated link</h5>
                     <a href="#" class="btn btn-primary">Link</a>
                 </div>
                 <div id="progressBars">
-                    <div id="applicationBar">
-                        <div id='applicationProgress'>
-                            <div class="progress" id="aProgress"></div>
-                            <div class="content"></div>
-                        </div>
-                        <h5>Weekly Goal for Application: <c:out value="${thisWeekApps.size()}"/>/<c:out value="${user.weeklyJobApplicationGoal}"/></h5>
-                        <p id="numOfThisWeekApps" class="hiddenData"><c:out value="${thisWeekApps.size()}"/></p>
-                        <p id="weeklyGoalForApps" class="hiddenData"><c:out value="${user.weeklyJobApplicationGoal}"/></p>
-                        <!-- <a href="#" class="btn btn-outline-primary changeBtn">Change</a> -->
-                        <button class="btn btn-outline-primary changeBtn" type="button" data-toggle="modal" data-target="#changeWeeklyGoals">Change</button>
-                    </div>
+                    
 
                     <div id="eventBar">
                         <div id='eventProgress'>
@@ -77,19 +67,11 @@
 
             <div id="content">
                 <p class="red"><c:out value="${filterError}"/></p>
+                <p class="red" id="searchError"><c:out value="${searchError}"/></p>
+                
                 <div id="filtersAndSearch">
                     <!-- filter start -->
                     <form action="/filterApplications" method="POST" class="form-inline">
-                        <label class="my-1 mr-2" for="status">Status</label>
-                        <select class="custom-select my-1 mr-sm-2" id="status" name="status">
-                            <option selected value="all">Choose..</option>
-                            <option value="submitted">Submitted</option>
-                            <option value="reachedOut">Reached Out</option>
-                            <option value="interview">Interview</option>
-                            <option value="accepted">Accepted</option>
-                            <option value="rejected">Rejected</option>
-                            <option value="withdrawn">Withdrawn</option>
-                        </select>
 
                         <label for="fromDate" class="my-1 mr-2">From Date</label>
                         <input type="date" class="form-control my-1 mr-sm-2" id="fromDate" name="fromDate">
@@ -111,48 +93,23 @@
                 <table class="table table-striped" id="appTable">
                     <thead>
                         <tr>
-                            <th scope="col">Status</th>
-                            <th scope="col">Company</th>
-                            <th scope="col">Submitted Date</th>
-                            <th scope="col">Job Title</th>
+                            <th scope="col">Event</th>
+                            <th scope="col">Event Date</th>
                             <th scope="col">Location</th>
-                            <th scope="col">Latest Note</th>
+                            <th scope="col">Note</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach items="${searchResults}" var="application">
+                        <c:forEach items="${apps}" var="application">
                             <tr>
-                                <td>
-                                    <form action="/changeStatus" method="POST">
-                                        <input type="hidden" name="applicationId" value="${application.id}">
-                                        <select name="status" class="form-control" onchange="this.form.submit()">
-                                            <option value="none" selected disabled hidden><c:out value="${application.status}"/></option>
-                                            
-                                            <option value="submitted">Submitted</option>
-                                            <option value="reachedOut">Reached Out</option>
-                                            <option value="interview">Interview</option>
-                                            <option value="accepted">Accepted</option>
-                                            <option value="rejected">Rejected</option>
-                                            <option value="withdrawn">Withdrawn</option>
-                                        </select>
-                                    </form>
-                                </td>
                                 <td><c:out value="${application.companyName}"/></td>
                                 <td><c:out value="${application.dateOfSubmission}"/></td>
                                 <td><c:out value="${application.jobTitle}"/></td>
                                 <td><c:out value="${application.city} ${application.state}"/></td>
                                 <td>
-                                    <c:if test="${application.notes.size() == 0}">
-                                        N/A
-                                    </c:if>
-                                    <c:if test="${application.notes.size() > 0}">
-                                        <c:out value="${application.notes.get(application.notes.size()-1).content}"/>
-                                    </c:if>
-                                </td>
-                                <td>
                                     <a href="" data-toggle="modal" data-target="#viewApplication${application.id}">View</a> |
-                                    <a href="" data-toggle="modal" data-target="#addReminder${application.id}">Reminder</a> |
+                                    <a href="" data-toggle="modal" data-target="#addReminder${application.id}">Contacts</a> |
                                     <a href="" data-toggle="modal" data-target="#editApplication${application.id}">Edit</a>
                                 </td>
                             </tr>
@@ -300,7 +257,7 @@
                 </table>
             </div>
         
-
+            <!-- addApplication start -->
             <div class="modal fade" id="addApplication" tabindex="-1">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -356,12 +313,13 @@
                             </div>
                         </form:form>
                     </div>
-                    
                     </div>
                 </div>
             </div>
+            <!-- addApplication ends -->
 
-            <!-- change weekly goal modal form starts-->
+            
+            <!-- change weekly goal modal form starts -->
             <div class="modal fade" id="changeWeeklyGoals" tabindex="-1">
                 <p class="hiddenData" id="flashError"><c:out value="${flashError}"/></p>
                 <div class="modal-dialog">
