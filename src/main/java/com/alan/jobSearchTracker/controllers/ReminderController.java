@@ -2,11 +2,13 @@ package com.alan.jobSearchTracker.controllers;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,6 +32,13 @@ public class ReminderController {
 		this.appService = appService;
 		this.reminderService = reminderService;
 		this.userService = userService;
+	}
+	
+	@RequestMapping("/reminders")
+	public String reminders(HttpSession session) {
+		List<Reminder> reminders = reminderService.findActiveReminders((Long) session.getAttribute("userId"));
+		session.setAttribute("reminders", reminders);
+		return "reminders.jsp";
 	}
 
 	@RequestMapping(value = "/addReminder", method = RequestMethod.POST)
@@ -75,4 +84,29 @@ public class ReminderController {
 		String referer = request.getHeader("referer");
 		return "redirect:" + referer;
 	}
+	
+	@RequestMapping("/clearReminder/{reminderId}")
+	public String clearReminder(@PathVariable("reminderId") Long id, HttpSession session) {
+		if (session.getAttribute("userId") != null) {
+			reminderService.destroyReminder(id);
+		}
+		return "redirect:/reminders";
+	}
+	
+	@RequestMapping("/clearAllReminders")
+	public String clearAllReminders(HttpSession session) {
+		if (session.getAttribute("userId") != null) {
+			reminderService.destroyAllReminders((Long) session.getAttribute("userId"));
+		}
+		return "redirect:/reminders";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
