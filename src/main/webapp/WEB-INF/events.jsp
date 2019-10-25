@@ -74,7 +74,7 @@
                 
                 <div id="filtersAndSearch">
                     <!-- filter start -->
-                    <form action="/filterApplications" method="POST" class="form-inline">
+                    <form action="/filterEvents" method="POST" class="form-inline">
 
                         <label for="fromDate" class="my-1 mr-2">From Date</label>
                         <input type="date" class="form-control my-1 mr-sm-2" id="fromDate" name="fromDate">
@@ -82,7 +82,7 @@
                         <label for="endDate" class="my-1 mr-2">End Date</label>
                         <input type="date" class="form-control my-1 mr-sm-2" id="endDate" name="endDate">
                         <button type="submit" class="btn btn-primary mr-sm-2">Apply Filter</button>
-                        <a href="/dashboard" class="btn btn-outline-primary">Reset Filter</a>
+                        <a href="/events" class="btn btn-outline-primary">Reset Filter</a>
                     </form>
                     <!-- filter end -->
 
