@@ -269,6 +269,10 @@
                                         <h5 class="modal-title">Add a reminder</h5>
                                     </div>
                                     <div class="modal-body">
+                                        <c:forEach items="${application.reminders}" var="reminder">
+                                            <p>Date: <c:out value="${reminder.reminderDate}"/></p>
+                                            <p>Message: <c:out value="${reminder.message}"/></p>
+                                        </c:forEach>
                                         <form method="post" action="/addReminder">
                                             <input type="hidden" name="appId" value="${application.id}">
                                             <div class="form-group">
