@@ -104,12 +104,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach items="${apps}" var="application">
+                        <c:forEach items="${events}" var="event">
                             <tr>
-                                <td><c:out value="${application.companyName}"/></td>
-                                <td><c:out value="${application.dateOfSubmission}"/></td>
-                                <td><c:out value="${application.jobTitle}"/></td>
-                                <td><c:out value="${application.city} ${application.state}"/></td>
+                                <td><c:out value="${event.name}"/></td>
+                                <td><c:out value="${event.eventDate}"/></td>
+                                <td><c:out value="${event.location}"/></td>
+                                <td><c:out value="${event.notes}"/></td>
                                 <td>
                                     <a href="" data-toggle="modal" data-target="#viewApplication${application.id}">View</a> |
                                     <a href="" data-toggle="modal" data-target="#addReminder${application.id}">Contacts</a> |
