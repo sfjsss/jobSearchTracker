@@ -1,5 +1,6 @@
 package com.alan.jobSearchTracker.services;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,5 +38,9 @@ public class EventService {
 	
 	public Event updateEvent(Event e) {
 		return eRepo.save(e);
+	}
+	
+	public List<Event> findEventsByTime(Long userId, Date fromDate, Date endDate) {
+		return eRepo.findEventsByTime(userId, fromDate, endDate);
 	}
 }

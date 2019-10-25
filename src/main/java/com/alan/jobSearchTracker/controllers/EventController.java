@@ -66,7 +66,7 @@ public class EventController {
 		}
 		
 		session.setAttribute("thisWeekEvents", thisWeekEvents);
-		
+		session.setAttribute("showFilteredEvents", false);
 		return "events.jsp";
 	}
 	
@@ -121,7 +121,37 @@ public class EventController {
 		return "redirect:" + referer;
 	}
 	
+	@RequestMapping(value = "/filterEvents", method = RequestMethod.POST)
+	public String filterEvents(@RequestParam("fromDate") String fromDate, @RequestParam("endDate") String endDate, RedirectAttributes ra, HttpServletRequest request) {
+		if (fromDate.equals("") || endDate.equals("")) {
+			ra.addFlashAttribute("filterError", "dates cannot be empty");
+			String referer = request.getHeader("referer");
+			return "redirect:" + referer;
+		}
+		else {
+			return "redirect:/filterEventResults?fromDate=" + fromDate + "&endDate=" + endDate;
+		}
+	}
 	
+	@RequestMapping("/filterEventResults")
+	public String filterEventResults(@RequestParam(value = "fromDate", required = false) String fromDate, @RequestParam(value = "endDate", required = false) String endDate, @RequestParam(value = "keyword", required = false) String keyword, HttpSession session, Model model, @ModelAttribute("event") Event event) throws Exception{
+		if (session.getAttribute("userId") == null) {
+			return "redirect:/login";
+		}
+		
+		Long userId = (Long) session.getAttribute("userId");
+		List<Event> filteredEvents = new ArrayList<Event>();
+		
+		if (fromDate != null && endDate != null) {
+			Date fd = new SimpleDateFormat("yyyy-MM-dd").parse(fromDate);
+			Date ed = new SimpleDateFormat("yyyy-MM-dd").parse(endDate);
+			filteredEvents = eService.findEventsByTime(userId, fd, ed);
+		}
+		
+		session.setAttribute("events", filteredEvents);
+		session.setAttribute("showFilteredEvents", true);
+		return "events.jsp";
+	}
 	
 	
 	
