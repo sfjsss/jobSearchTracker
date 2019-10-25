@@ -17,6 +17,8 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 @Table(name = "events")
 public class Event {
@@ -32,6 +34,7 @@ public class Event {
 	
 	private String link;
 	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date eventDate;
 	
 	private String location;
@@ -133,8 +136,16 @@ public class Event {
 		this.contacts = contacts;
 	}
 	
-	//time stamp generation
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 	
+	//time stamp generation
+
 	@PrePersist
 	protected void onCreate() {
 		this.createdAt = new Date();

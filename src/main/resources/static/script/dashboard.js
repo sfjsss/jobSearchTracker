@@ -19,7 +19,6 @@ $(document).ready(function() {
 
     if ($("#editError").html() != "") {
         let editModalId = $("#editError").html();
-        console.log(editModalId);
         $(editModalId).modal('show');
     };
 
@@ -31,5 +30,9 @@ $(document).ready(function() {
     if ($("#reminderError").html() != "") {
         let addReminderModalId = $("#reminderError").html();
         $(addReminderModalId).modal('show');
+    };
+
+    if ($("#eventModalError").html()) {
+        $("#addEvent").modal("show");
     };
 })
