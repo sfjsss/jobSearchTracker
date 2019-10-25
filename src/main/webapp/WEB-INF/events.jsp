@@ -111,7 +111,7 @@
                                 <td><c:out value="${event.location}"/></td>
                                 <td><c:out value="${event.notes}"/></td>
                                 <td>
-                                    <a href="" data-toggle="modal" data-target="#viewApplication${application.id}">View</a> |
+                                    <a href="" data-toggle="modal" data-target="#viewEvent${event.id}">View</a> |
                                     <a href="" data-toggle="modal" data-target="#addReminder${application.id}">Contacts</a> |
                                     <a href="" data-toggle="modal" data-target="#editApplication${application.id}">Edit</a>
                                 </td>
@@ -178,39 +178,21 @@
                             <!-- edit application form ends -->
 
                             <!-- view application starts -->
-                            <p class="hiddenData" id="noteError"><c:out value="${noteError}"/></p>
-                            <div class="modal fade" id="viewApplication${application.id}" tabindex="-1">
+                            <!-- <p class="hiddenData" id="noteError"><c:out value="${noteError}"/></p> -->
+                            <div class="modal fade" id="viewEvent${event.id}" tabindex="-1">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title">Detail of the application</h5>
+                                        <h5 class="modal-title">Detail of the event</h5>
                                     </div>
                                     <div class="modal-body">
-                                        <p>Company Name: <c:out value="${application.companyName}"/></p>
-                                        <p>Job Post Link: <c:out value="${application.jobPostLink}"/></p>
-                                        <p>Date of Submission: <c:out value="${application.dateOfSubmission}"/></p>
-                                        <p>Job Title: <c:out value="${application.jobTitle}"/></p>
-                                        <p>Location: <c:out value="${application.city} ${application.state}"/></p>
-                                        <p>Resume Link: <c:out value="${application.resumeLink}"/></p>
-                                        <p>Cover Letter Link: <c:out value="${application.coverLetterLink}"/></p>
-                                        <p>Cover Letter: <c:out value="${application.coverLetter}"/></p>
+                                        <p>Event Name: <c:out value="${event.name}"/></p>
+                                        <p>Event Post Link: <c:out value="${event.link}"/></p>
+                                        <p>Event Date: <c:out value="${event.eventDate}"/></p>
+                                        <p>Location: <c:out value="${event.location}"/></p>
+                                        <p>Notes: <c:out value="${event.notes}"/></p>
 
-                                        <c:forEach items="${application.notes}" var="note">
-                                            <p>Note on <c:out value="${note.createdAt}"/>: <c:out value="${note.content}"/></p>
-                                        </c:forEach>
-
-                                        <form method="post" action="/addNote">
-                                            <input type="hidden" name="appId" value="${application.id}">
-                                            <div class="form-group">
-                                                <label for="note" class="col-form-label">Add a note</label>
-                                                <textarea name="note" class="form-control" id="note"></textarea>
-                                                <p class="red"><c:out value="${contentError}"/></p>
-                                            </div>
-                                            <div class="form-group formBtnDiv">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                <button type="submit" class="btn btn-primary">Add</button>
-                                            </div>
-                                        </form>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                     </div>
                                     
                                     </div>
