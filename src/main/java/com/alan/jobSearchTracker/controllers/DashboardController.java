@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -71,8 +72,8 @@ public class DashboardController {
 		
 	}
 	
-	@RequestMapping(value = "/weeklyGoals", method = RequestMethod.POST)
-	public String changeWeeklyGoals(HttpSession session, @RequestParam("appWeeklyGoal") int appWeeklyGoal, @RequestParam("eventWeeklyGoal") int eventWeeklyGoal, RedirectAttributes ra) {
+	@RequestMapping(value = "/weeklyAppGoals", method = RequestMethod.POST)
+	public String changeWeeklyAppGoals(HttpSession session, @RequestParam("appWeeklyGoal") int appWeeklyGoal, RedirectAttributes ra, HttpServletRequest request) {
 		Long userId = (Long) session.getAttribute("userId");
 		User u = userService.findUserById(userId);
 		boolean validation = true;
@@ -81,13 +82,31 @@ public class DashboardController {
 			ra.addFlashAttribute("appWeeklyGoalError", "this number needs to be greater or equal to 1");
 			validation = false;
 		}
+		
+		if (validation) {
+			u.setWeeklyJobApplicationGoal(appWeeklyGoal);
+			userService.updateUser(u);
+		}
+		else {
+			ra.addFlashAttribute("flashError", true);
+		}
+		
+		String referer = request.getHeader("referer");
+		return "redirect:" + referer;
+	}
+	
+	@RequestMapping(value = "/weeklyEventGoals", method = RequestMethod.POST)
+	public String changeWeeklyEventGoals(HttpSession session, @RequestParam("eventWeeklyGoal") int eventWeeklyGoal, RedirectAttributes ra, HttpServletRequest request) {
+		Long userId = (Long) session.getAttribute("userId");
+		User u = userService.findUserById(userId);
+		boolean validation = true;
+		
 		if (eventWeeklyGoal <= 0) {
 			ra.addFlashAttribute("eventWeeklyGoalError", "this number needs to be greater or equal to 1");
 			validation = false;
 		}
 		
 		if (validation) {
-			u.setWeeklyJobApplicationGoal(appWeeklyGoal);
 			u.setWeeklyNetworkEventGoal(eventWeeklyGoal);
 			userService.updateUser(u);
 		}
@@ -95,8 +114,11 @@ public class DashboardController {
 			ra.addFlashAttribute("flashError", true);
 		}
 		
-		return "redirect:/dashboard";
+		String referer = request.getHeader("referer");
+		return "redirect:" + referer;
 	}
+	
+	
 	
 	@RequestMapping(value = "/filterApplications", method = RequestMethod.POST)
 	public String filterApplications(@RequestParam("status") String status, @RequestParam("fromDate") String fromDate, @RequestParam("endDate") String endDate, RedirectAttributes ra) {
@@ -135,6 +157,8 @@ public class DashboardController {
 		}
 		
 		Long userId = (Long) session.getAttribute("userId");
+		User updatedUser = userService.findUserById(userId);
+		session.setAttribute("user", updatedUser);
 		User u = (User) session.getAttribute("user");
 		List<Application> searchResults = new ArrayList<Application>();
 		
