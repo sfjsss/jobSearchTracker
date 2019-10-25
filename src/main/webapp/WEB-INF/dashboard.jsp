@@ -24,11 +24,11 @@
                     <a class="nav-link" href="/dashboard">Job Applications<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Networking Events</a>
+                    <a class="nav-link" href="/events">Networking Events</a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link" href="#">Contacts</a>
-                </li>
+                </li> -->
                 <li class="nav-item">
                     <a class="nav-link" href="/reminders">Reminders(<c:if test="${reminders.size()>0}"><span class="red"><c:out value="${reminders.size()}"/></span></c:if><c:if test="${reminders.size()<=0}">0</c:if>)</a>
                 </li>
@@ -63,15 +63,6 @@
                         <button class="btn btn-outline-primary changeBtn" type="button" data-toggle="modal" data-target="#changeWeeklyGoals">Change</button>
                     </div>
 
-                    <div id="eventBar">
-                        <div id='eventProgress'>
-                            <div class="progress" id="eProgress"></div>
-                            <div class="content"></div>
-                        </div>
-                        <h5>Weekly Goal for Event: 2/2</h5>
-                        <!-- <a href="#" class="btn btn-outline-primary changeBtn">Change</a> -->
-                        <button class="btn btn-outline-primary changeBtn" type="button" data-toggle="modal" data-target="#changeWeeklyGoals">Change</button>
-                    </div>
                 </div>
             </div>
 

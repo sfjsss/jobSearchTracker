@@ -24,11 +24,11 @@
                     <a class="nav-link" href="/dashboard">Job Applications<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Networking Events</a>
+                    <a class="nav-link" href="/events">Networking Events</a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link" href="#">Contacts</a>
-                </li>
+                </li> -->
                 <li class="nav-item active">
                     <a class="nav-link" href="#">Reminders(<c:if test="${reminders.size()>0}"><span class="red"><c:out value="${reminders.size()}"/></span></c:if><c:if test="${reminders.size()<=0}">0</c:if>)</a>
                 </li>
