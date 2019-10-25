@@ -63,15 +63,6 @@
                         <button class="btn btn-outline-primary changeBtn" type="button" data-toggle="modal" data-target="#changeWeeklyGoals">Change</button>
                     </div>
 
-                    <div id="eventBar">
-                        <div id='eventProgress'>
-                            <div class="progress" id="eProgress"></div>
-                            <div class="content"></div>
-                        </div>
-                        <h5>Weekly Goal for Event: 2/2</h5>
-                        <!-- <a href="#" class="btn btn-outline-primary changeBtn">Change</a> -->
-                        <button class="btn btn-outline-primary changeBtn" type="button" data-toggle="modal" data-target="#changeWeeklyGoals">Change</button>
-                    </div>
                 </div>
             </div>
 
@@ -370,16 +361,11 @@
                         <h5 class="modal-title">Change the weekly goal</h5>
                     </div>
                     <div class="modal-body">
-                        <form method="post" action="/weeklyGoals">
+                        <form method="post" action="/weeklyAppGoals">
                             <div class="form-group">
                                 <label name="appWeeklyGoal" for="appWeeklyGoal" class="col-form-label">Weekly Goal for Application:</label>
                                 <input name="appWeeklyGoal" type="number" class="form-control" id="appWeeklyGoal" value="${user.weeklyJobApplicationGoal}"/>
                                 <p class="red"><c:out value="${appWeeklyGoalError}"/></p>
-                            </div>
-                            <div class="form-group">
-                                <label name="eventWeeklyGoal" for="eventWeeklyGoal" class="col-form-label">Weekly Goal for Event:</label>
-                                <input name="eventWeeklyGoal" type="number" class="form-control" id="eventWeeklyGoal" value="2"/>
-                                <p class="red"><c:out value="${eventWeeklyGoalError}"/></p>
                             </div>
                             <div class="form-group formBtnDiv">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

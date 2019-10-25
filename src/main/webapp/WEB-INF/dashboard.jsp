@@ -364,16 +364,11 @@
                         <h5 class="modal-title">Change the weekly goal</h5>
                     </div>
                     <div class="modal-body">
-                        <form method="post" action="/weeklyGoals">
+                        <form method="post" action="/weeklyAppGoals">
                             <div class="form-group">
                                 <label name="appWeeklyGoal" for="appWeeklyGoal" class="col-form-label">Weekly Goal for Application:</label>
                                 <input name="appWeeklyGoal" type="number" class="form-control" id="appWeeklyGoal" value="${user.weeklyJobApplicationGoal}"/>
                                 <p class="red"><c:out value="${appWeeklyGoalError}"/></p>
-                            </div>
-                            <div class="form-group">
-                                <label name="eventWeeklyGoal" for="eventWeeklyGoal" class="col-form-label">Weekly Goal for Event:</label>
-                                <input name="eventWeeklyGoal" type="number" class="form-control" id="eventWeeklyGoal" value="2"/>
-                                <p class="red"><c:out value="${eventWeeklyGoalError}"/></p>
                             </div>
                             <div class="form-group formBtnDiv">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

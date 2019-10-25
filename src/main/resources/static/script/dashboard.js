@@ -6,8 +6,13 @@ $(document).ready(function() {
     let aProgressBarPercent = numOfThisWeekApps/weeklyGoalForApps*100;
     let aProgressBarPercentInStr = aProgressBarPercent + "%";
 
+    let numOfThisWeekEvents = $("#numOfThisWeekEvents").html();
+    let weeklyGoalForEvents = $("#weeklyGoalForEvents").html();
+    let eProgressBarPercent = numOfThisWeekEvents/weeklyGoalForEvents*100;
+    let eProgressBarPercentInStr = eProgressBarPercent + "%";
+
     $("#aProgress").animate({width: aProgressBarPercentInStr}, 1000);
-    $("#eProgress").animate({width: "80%"}, 1000);
+    $("#eProgress").animate({width: eProgressBarPercentInStr}, 1000);
 
     if ($("#modalError").html()) {
         $('#addApplication').modal('show');
