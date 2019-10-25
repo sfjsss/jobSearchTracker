@@ -113,58 +113,42 @@
                                 <td>
                                     <a href="" data-toggle="modal" data-target="#viewEvent${event.id}">View</a> |
                                     <a href="" data-toggle="modal" data-target="#addReminder${application.id}">Contacts</a> |
-                                    <a href="" data-toggle="modal" data-target="#editApplication${application.id}">Edit</a>
+                                    <a href="" data-toggle="modal" data-target="#editEvent${event.id}">Edit</a>
                                 </td>
                             </tr>
 
                             <!-- edit application form starts -->
                             <p class="hiddenData" id="editError"><c:out value="${editError}"/></p>
-                            <div class="modal fade" id="editApplication${application.id}" tabindex="-1">
+                            <div class="modal fade" id="editEvent${event.id}" tabindex="-1">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title">Edit application</h5>
+                                        <h5 class="modal-title">Edit event</h5>
                                     </div>
                                     <div class="modal-body">
-                                        <form method="post" action="/applications/${application.id}">
+                                        <form method="post" action="/events/${event.id}">
                                             <div class="form-group">
-                                                <label for="companyName" class="col-form-label">Company Name*:</label>
-                                                <input name="companyName" type="text" class="form-control" id="companyName" value="${application.companyName}"/>
-                                                <p class="red"><c:out value="${companyNameError}"/></p>
+                                                <label for="name" class="col-form-label">Event Name*:</label>
+                                                <input name="name" type="text" class="form-control" id="name" value="${event.name}"/>
+                                                <p class="red"><c:out value="${nameError}"/></p>
                                             </div>
                                             <div class="form-group">
-                                                <label for="jobPostLink" class="col-form-label">Job Post Link:</label>
-                                                <input name="jobPostLink" type="text" class="form-control" id="jobPostLink" value="${application.jobPostLink}"/>
+                                                <label for="link" class="col-form-label">Event Post Link:</label>
+                                                <input name="link" type="text" class="form-control" id="link" value="${event.link}"/>
                                             </div>
                                             <div class="form-group">
-                                                <label for="dateOfSubmission" class="col-form-label">Date of Submission* (<c:out value="${application.dateOfSubmission}"/>):</label>
-                                                <input name="dateOfSubmission" type="date" class="form-control" id="dateOfSubmission"/>
-                                                <p class="red"><c:out value="${dateOfSubmissionError}"/></p>
+                                                <label for="eventDate" class="col-form-label">Date of Event* (<c:out value="${event.eventDate}"/>):</label>
+                                                <input name="eventDate" type="date" class="form-control" id="eventDate"/>
+                                                <p class="red"><c:out value="${eventDateError}"/></p>
                                             </div>
                                             <div class="form-group">
-                                                <label for="jobTitle" class="col-form-label">Job Title*:</label>
-                                                <input name="jobTitle" type="text" class="form-control" id="jobTitle" value="${application.jobTitle}"/>
-                                                <p class="red"><c:out value="${jobTitleError}"/></p>
+                                                <label for="location" class="col-form-label">Location:</label>
+                                                <input name="location" type="text" class="form-control" id="location" value="${event.location}"/>
+                                                <p class="red"><c:out value="${locationError}"/></p>
                                             </div>
                                             <div class="form-group">
-                                                <label for="city" class="col-form-label">City:</label>
-                                                <input name="city" type="text" class="form-control" id="city" value="${application.city}"/>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="state" class="col-form-label">State:</label>
-                                                <input name="state" type="text" class="form-control" id="state" value="${application.state}"/>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="resumeLink" class="col-form-label">Resume Link:</label>
-                                                <input name="resumeLink" type="text" class="form-control" id="resumeLink" value="${application.resumeLink}"/>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="coverLetterLink" class="col-form-label">Cover Letter Link:</label>
-                                                <input name="coverLetterLink" type="text" class="form-control" id="coverLetterLink" value="${application.coverLetterLink}"/>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="coverLetter" class="col-form-label">Cover Letter:</label>
-                                                <textarea name="coverLetter" class="form-control" id="coverLetter"><c:out value="${application.coverLetter}"/></textarea>
+                                                <label for="notes" class="col-form-label">Notes:</label>
+                                                <textarea name="notes" class="form-control" id="notes"><c:out value="${event.notes}"/></textarea>
                                             </div>
                                             <div class="form-group formBtnDiv">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
