@@ -1,6 +1,7 @@
 package com.alan.jobSearchTracker.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -22,5 +23,19 @@ public class EventService {
 	
 	public List<Event> findEventsByUserId(Long userId) {
 		return eRepo.findEventsByUserId(userId);
+	}
+	
+	public Event findEventById(Long eventId) {
+		Optional<Event> e = eRepo.findById(eventId);
+		if (e.isPresent()) {
+			return e.get();
+		}
+		else {
+			return null;
+		}
+	}
+	
+	public Event updateEvent(Event e) {
+		return eRepo.save(e);
 	}
 }
