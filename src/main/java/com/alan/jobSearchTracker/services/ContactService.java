@@ -1,6 +1,7 @@
 package com.alan.jobSearchTracker.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -24,5 +25,24 @@ public class ContactService {
 	
 	public List<Contact> findAllContactsForAUser(Long userId) {
 		return contactRepo.findAllByUserIdOrderByCreatedAtDesc(userId);
+	}
+	
+	//find a contact by contact id
+	
+	public Contact findContactById(Long contactId) {
+		Optional<Contact> c = contactRepo.findById(contactId);
+		
+		if (c.isPresent()) {
+			return c.get();
+		}
+		else {
+			return null;
+		}
+	}
+	
+	//update a contact
+	
+	public Contact updateContact(Contact c) {
+		return contactRepo.save(c);
 	}
 }

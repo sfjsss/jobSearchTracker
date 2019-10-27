@@ -48,5 +48,10 @@ $(document).ready(function() {
 
     if ($("#addContactError").html()) {
         $("#addContact").modal("show");
-    }
+    };
+
+    if ($("#editContactError").html() != "") {
+        let editContactModalId = $("#editContactError").html();
+        $(editContactModalId).modal("show");
+    };
 })
