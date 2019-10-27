@@ -1,5 +1,7 @@
 package com.alan.jobSearchTracker.services;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.alan.jobSearchTracker.models.Contact;
@@ -16,5 +18,11 @@ public class ContactService {
 	
 	public Contact createContact(Contact c) {
 		return contactRepo.save(c);
+	}
+	
+	// get all contacts from a user
+	
+	public List<Contact> findAllContactsForAUser(Long userId) {
+		return contactRepo.findAllByUserId(userId);
 	}
 }

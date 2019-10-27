@@ -13,6 +13,7 @@
         <link rel="stylesheet" href="/css/dashboard.css">
     </head>
     <body>
+        <!-- nav bar starts -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand" href="/dashboard">Job Search Tracker</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -26,9 +27,9 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="#">Networking Events</a>
                 </li>
-                <!-- <li class="nav-item">
-                    <a class="nav-link" href="#">Contacts</a>
-                </li> -->
+                <li class="nav-item">
+                    <a class="nav-link" href="/contacts">Contacts</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/reminders">Reminders(<c:if test="${reminders.size()>0}"><span class="red"><c:out value="${reminders.size()}"/></span></c:if><c:if test="${reminders.size()<=0}">0</c:if>)</a>
                 </li>
@@ -40,12 +41,13 @@
                 <a href="/logout" class="btn btn-outline-danger my-2 my-sm-0">Logout</a>
             </div>
         </nav>
+        <!-- nav bar ends -->
 
         <div id="bodyWrapper">
 
             <div id="overview">
                 <div id="statsAndShare">
-                    <h5>You have attended <span class="specialBlue"><c:out value="${user.applications.size()}"/> events</span> in total. Add a new event</h5>
+                    <h5>You have attended <span class="specialBlue"><c:out value="${user.events.size()}"/> events</span> in total. Add a new event</h5>
                     <button class="btn btn-success" type="button" data-toggle="modal" data-target="#addEvent">Add Event</button>
                     <h5>or share your progress through a generated link</h5>
                     <a href="#" class="btn btn-primary">Link</a>
