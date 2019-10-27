@@ -23,6 +23,6 @@ public class ContactService {
 	// get all contacts from a user
 	
 	public List<Contact> findAllContactsForAUser(Long userId) {
-		return contactRepo.findAllByUserId(userId);
+		return contactRepo.findAllByUserIdOrderByCreatedAtDesc(userId);
 	}
 }
