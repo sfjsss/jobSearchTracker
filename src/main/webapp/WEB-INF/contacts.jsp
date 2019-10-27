@@ -244,8 +244,7 @@
                     </div>
                     <div class="modal-body">
                         <form:form method="post" action="/contacts" modelAttribute="contact">
-                            <p id="modalError" class="hiddenData"><c:out value="${error}"/></p>
-                            <form:input path="status" type="hidden" value="submitted"/>
+                            <p id="addContactError" class="hiddenData"><c:out value="${error}"/></p>
                             <div class="form-group">
                                 <form:label path="name" for="name" class="col-form-label">Name*:</form:label>
                                 <form:input path="name" type="text" class="form-control" id="name"/>

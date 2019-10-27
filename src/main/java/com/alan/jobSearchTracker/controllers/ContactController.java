@@ -4,9 +4,11 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -36,7 +38,7 @@ public class ContactController {
 	// render contact page
 	
 	@RequestMapping(value = "/contacts")
-	public String contacts(HttpSession session, @ModelAttribute("contact") Contact contact, Model model) {
+	public String contacts(HttpSession session, @ModelAttribute("contact") Contact contact) {
 		// check if user has logged in
 		
 		if (session.getAttribute("userId") == null) {
@@ -51,13 +53,44 @@ public class ContactController {
 		User u = uService.findUserById(uId);
 		session.setAttribute("user", u);
 		
-		// retrieve all contacts from current user, and put in model
+		// retrieve all contacts from current user, and put in session
 		
 		List<Contact> contacts = contactService.findAllContactsForAUser(uId);
-		model.addAttribute("contacts", contacts);
+		session.setAttribute("contacts", contacts);
 		
 		return "contacts.jsp";
 	}
+	
+	// add contact from contact page
+	
+	@RequestMapping(value = "/contacts", method = RequestMethod.POST)
+	public String createContact(@Valid @ModelAttribute("contact") Contact contact, BindingResult result, Model model, HttpSession session) {
+		if (result.hasErrors()) {
+			
+			// set error to be true so modal would pop
+			
+			model.addAttribute("error", true);
+			return "contacts.jsp";
+		}
+		else {
+			
+			// get the user to attach
+			
+			User u = (User) session.getAttribute("user");
+			
+			// attach the contact to the user
+			
+			contact.setUser(u);
+			
+			// create the contact
+			
+			contactService.createContact(contact);
+			
+			return "redirect:/contacts";
+		}
+	}
+	
+	// add contact from network event page
 
 	@RequestMapping(value = "/addContact", method = RequestMethod.POST)
 	public String addContact(@RequestParam("eventId") Long eventId, @RequestParam("name") String name, @RequestParam("number") String number, @RequestParam("email") String email, @RequestParam("linkedIn") String linkedIn, @RequestParam("description") String description, HttpSession session, RedirectAttributes ra, HttpServletRequest request) {

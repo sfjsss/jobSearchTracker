@@ -45,4 +45,8 @@ $(document).ready(function() {
     if ($("#eventModalError").html()) {
         $("#addEvent").modal("show");
     };
+
+    if ($("#addContactError").html()) {
+        $("#addContact").modal("show");
+    }
 })
