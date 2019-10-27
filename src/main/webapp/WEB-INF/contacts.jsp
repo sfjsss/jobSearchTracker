@@ -91,54 +91,37 @@
                                 </td>
                             </tr>
 
-                            <!-- edit application form starts -->
-                            <p class="hiddenData" id="editError"><c:out value="${editError}"/></p>
-                            <div class="modal fade" id="editApplication${application.id}" tabindex="-1">
+                            <!-- edit contact form starts -->
+                            <p class="hiddenData" id="editContactError"><c:out value="${editError}"/></p>
+                            <div class="modal fade" id="editContact${contact.id}" tabindex="-1">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title">Edit application</h5>
+                                        <h5 class="modal-title">Edit contact</h5>
                                     </div>
                                     <div class="modal-body">
-                                        <form method="post" action="/applications/${application.id}">
+                                        <form method="post" action="/contacts/${contact.id}">
                                             <div class="form-group">
-                                                <label for="companyName" class="col-form-label">Company Name*:</label>
-                                                <input name="companyName" type="text" class="form-control" id="companyName" value="${application.companyName}"/>
-                                                <p class="red"><c:out value="${companyNameError}"/></p>
+                                                <label for="name" class="col-form-label">Name*:</label>
+                                                <input name="name" type="text" class="form-control" id="name" value="${contact.name}"/>
+                                                <p class="red"><c:out value="${nameError}"/></p>
                                             </div>
                                             <div class="form-group">
-                                                <label for="jobPostLink" class="col-form-label">Job Post Link:</label>
-                                                <input name="jobPostLink" type="text" class="form-control" id="jobPostLink" value="${application.jobPostLink}"/>
+                                                <label for="number" class="col-form-label">Number:</label>
+                                                <input name="number" type="text" class="form-control" id="number" value="${contact.number}"/>
                                             </div>
                                             <div class="form-group">
-                                                <label for="dateOfSubmission" class="col-form-label">Date of Submission* (<c:out value="${application.dateOfSubmission}"/>):</label>
-                                                <input name="dateOfSubmission" type="date" class="form-control" id="dateOfSubmission"/>
-                                                <p class="red"><c:out value="${dateOfSubmissionError}"/></p>
+                                                <label for="email" class="col-form-label">Email:</label>
+                                                <input name="email" type="email" class="form-control" id="email" value="${contact.email}"/>
+                                                <p class="red"><c:out value="${emailError}"/></p>
                                             </div>
                                             <div class="form-group">
-                                                <label for="jobTitle" class="col-form-label">Job Title*:</label>
-                                                <input name="jobTitle" type="text" class="form-control" id="jobTitle" value="${application.jobTitle}"/>
-                                                <p class="red"><c:out value="${jobTitleError}"/></p>
+                                                <label for="linkedIn" class="col-form-label">LinkedIn:</label>
+                                                <input name="linkedIn" type="text" class="form-control" id="linkedIn" value="${contact.linkedIn}"/>
                                             </div>
                                             <div class="form-group">
-                                                <label for="city" class="col-form-label">City:</label>
-                                                <input name="city" type="text" class="form-control" id="city" value="${application.city}"/>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="state" class="col-form-label">State:</label>
-                                                <input name="state" type="text" class="form-control" id="state" value="${application.state}"/>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="resumeLink" class="col-form-label">Resume Link:</label>
-                                                <input name="resumeLink" type="text" class="form-control" id="resumeLink" value="${application.resumeLink}"/>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="coverLetterLink" class="col-form-label">Cover Letter Link:</label>
-                                                <input name="coverLetterLink" type="text" class="form-control" id="coverLetterLink" value="${application.coverLetterLink}"/>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="coverLetter" class="col-form-label">Cover Letter:</label>
-                                                <textarea name="coverLetter" class="form-control" id="coverLetter"><c:out value="${application.coverLetter}"/></textarea>
+                                                <label for="description" class="col-form-label">Description:</label>
+                                                <textarea name="description" class="form-control" id="description"><c:out value="${contact.description}"/></textarea>
                                             </div>
                                             <div class="form-group formBtnDiv">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -149,7 +132,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- edit application form ends -->
+                            <!-- edit contact form ends -->
 
                             <!-- view application starts -->
                             <p class="hiddenData" id="noteError"><c:out value="${noteError}"/></p>
