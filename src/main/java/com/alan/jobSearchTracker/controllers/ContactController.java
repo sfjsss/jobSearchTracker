@@ -1,9 +1,13 @@
 package com.alan.jobSearchTracker.controllers;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,16 +18,45 @@ import com.alan.jobSearchTracker.models.Event;
 import com.alan.jobSearchTracker.models.User;
 import com.alan.jobSearchTracker.services.ContactService;
 import com.alan.jobSearchTracker.services.EventService;
+import com.alan.jobSearchTracker.services.UserService;
 
 @Controller
 public class ContactController {
 	
 	private final EventService eService;
 	private final ContactService contactService;
+	private final UserService uService;
 	
-	public ContactController(EventService eService, ContactService contactService) {
+	public ContactController(EventService eService, ContactService contactService, UserService uService) {
 		this.eService = eService;
 		this.contactService = contactService;
+		this.uService = uService;
+	}
+	
+	// render contact page
+	
+	@RequestMapping(value = "/contacts")
+	public String contacts(HttpSession session, @ModelAttribute("contact") Contact contact, Model model) {
+		// check if user has logged in
+		
+		if (session.getAttribute("userId") == null) {
+			return "redirect:/login";
+		}
+		
+		// render the contacts page
+		
+		// put user in session
+		
+		Long uId = (Long) session.getAttribute("userId");
+		User u = uService.findUserById(uId);
+		session.setAttribute("user", u);
+		
+		// retrieve all contacts from current user, and put in model
+		
+		List<Contact> contacts = contactService.findAllContactsForAUser(uId);
+		model.addAttribute("contacts", contacts);
+		
+		return "contacts.jsp";
 	}
 
 	@RequestMapping(value = "/addContact", method = RequestMethod.POST)

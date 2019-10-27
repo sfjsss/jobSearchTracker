@@ -10,7 +10,7 @@
 
         <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
         <link rel="stylesheet" href="/bootstrap-4.3.1-dist/css/bootstrap.min.css">
-        <link rel="stylesheet" href="/css/dashboard.css">
+        <link rel="stylesheet" href="/css/contacts.css">
     </head>
     <body>
         <!-- nav bar starts -->
@@ -21,13 +21,13 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
+                <li class="nav-item">
                     <a class="nav-link" href="/dashboard">Job Applications<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/events">Networking Events</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item active">
                     <a class="nav-link" href="/contacts">Contacts</a>
                 </li>
                 <li class="nav-item">
@@ -44,57 +44,21 @@
         <!-- nav bar ends -->
 
         <div id="bodyWrapper">
-
+            <!-- overview starts -->
             <div id="overview">
                 <div id="statsAndShare">
-                    <h5>You have submitted <span class="specialBlue"><c:out value="${user.applications.size()}"/> applications</span> in total. Add a new application</h5>
-                    <button class="btn btn-success" type="button" data-toggle="modal" data-target="#addApplication">Add Application</button>
-                    <h5>or share your progress through a generated link</h5>
-                    <a href="#" class="btn btn-primary">Link</a>
-                </div>
-                <div id="progressBars">
-                    <div id="applicationBar">
-                        <div id='applicationProgress'>
-                            <div class="progress" id="aProgress"></div>
-                            <div class="content"></div>
-                        </div>
-                        <h5>Weekly Goal for Application: <c:out value="${thisWeekApps.size()}"/>/<c:out value="${user.weeklyJobApplicationGoal}"/></h5>
-                        <p id="numOfThisWeekApps" class="hiddenData"><c:out value="${thisWeekApps.size()}"/></p>
-                        <p id="weeklyGoalForApps" class="hiddenData"><c:out value="${user.weeklyJobApplicationGoal}"/></p>
-                        <!-- <a href="#" class="btn btn-outline-primary changeBtn">Change</a> -->
-                        <button class="btn btn-outline-primary changeBtn" type="button" data-toggle="modal" data-target="#changeWeeklyGoals">Change</button>
-                    </div>
-
+                    <h5>You have added <span class="specialBlue"><c:out value="${user.contacts.size()}"/> contacts</span> in total. Add a new contact</h5>
+                    <button class="btn btn-success" type="button" data-toggle="modal" data-target="#addContact">Add Contact</button>
                 </div>
             </div>
+            <!-- overview ends -->
 
             <div id="content">
                 <p class="red"><c:out value="${filterError}"/></p>
                 <p class="red" id="searchError"><c:out value="${searchError}"/></p>
                 
                 <div id="filtersAndSearch">
-                    <!-- filter start -->
-                    <form action="/filterApplications" method="POST" class="form-inline">
-                        <label class="my-1 mr-2" for="status">Status</label>
-                        <select class="custom-select my-1 mr-sm-2" id="status" name="status">
-                            <option selected value="all">Choose..</option>
-                            <option value="submitted">Submitted</option>
-                            <option value="reachedOut">Reached Out</option>
-                            <option value="interview">Interview</option>
-                            <option value="accepted">Accepted</option>
-                            <option value="rejected">Rejected</option>
-                            <option value="withdrawn">Withdrawn</option>
-                        </select>
-
-                        <label for="fromDate" class="my-1 mr-2">From Date</label>
-                        <input type="date" class="form-control my-1 mr-sm-2" id="fromDate" name="fromDate">
-
-                        <label for="endDate" class="my-1 mr-2">End Date</label>
-                        <input type="date" class="form-control my-1 mr-sm-2" id="endDate" name="endDate">
-                        <button type="submit" class="btn btn-primary mr-sm-2">Apply Filter</button>
-                        <a href="/dashboard" class="btn btn-outline-primary">Reset Filter</a>
-                    </form>
-                    <!-- filter end -->
+                    
 
                     <form class="form-inline my-2 my-lg-0" method="POST" action="/searchApplications">
                         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="keyword">
@@ -102,53 +66,28 @@
                     </form>
                 </div>
 
-
+                <!-- table starts -->
                 <table class="table table-striped" id="appTable">
                     <thead>
                         <tr>
-                            <th scope="col">Status</th>
-                            <th scope="col">Company</th>
-                            <th scope="col">Submitted Date</th>
-                            <th scope="col">Job Title</th>
-                            <th scope="col">Location</th>
-                            <th scope="col">Latest Note</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Number</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">LinkedIn</th>
+                            <th scope="col">Description</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach items="${apps}" var="application">
+                        <c:forEach items="${contacts}" var="contact">
                             <tr>
+                                <td><c:out value="${contact.name}"/></td>
+                                <td><c:out value="${contact.number}"/></td>
+                                <td><c:out value="${contact.email}"/></td>
+                                <td><c:out value="${contact.linkedIn}"/></td>
+                                <td><c:out value="${contact.description}"/></td>
                                 <td>
-                                    <form action="/changeStatus" method="POST">
-                                        <input type="hidden" name="applicationId" value="${application.id}">
-                                        <select name="status" class="form-control" onchange="this.form.submit()">
-                                            <option value="none" selected disabled hidden><c:out value="${application.status}"/></option>
-                                            
-                                            <option value="submitted">Submitted</option>
-                                            <option value="reachedOut">Reached Out</option>
-                                            <option value="interview">Interview</option>
-                                            <option value="accepted">Accepted</option>
-                                            <option value="rejected">Rejected</option>
-                                            <option value="withdrawn">Withdrawn</option>
-                                        </select>
-                                    </form>
-                                </td>
-                                <td><c:out value="${application.companyName}"/></td>
-                                <td><c:out value="${application.dateOfSubmission}"/></td>
-                                <td><c:out value="${application.jobTitle}"/></td>
-                                <td><c:out value="${application.city} ${application.state}"/></td>
-                                <td>
-                                    <c:if test="${application.notes.size() == 0}">
-                                        N/A
-                                    </c:if>
-                                    <c:if test="${application.notes.size() > 0}">
-                                        <c:out value="${application.notes.get(application.notes.size()-1).content}"/>
-                                    </c:if>
-                                </td>
-                                <td>
-                                    <a href="" data-toggle="modal" data-target="#viewApplication${application.id}">View</a> |
-                                    <a href="" data-toggle="modal" data-target="#addReminder${application.id}">Reminder</a> |
-                                    <a href="" data-toggle="modal" data-target="#editApplication${application.id}">Edit</a>
+                                    <a href="" data-toggle="modal" data-target="#editContact${contact.id}">Edit</a>
                                 </td>
                             </tr>
 
@@ -293,57 +232,42 @@
                         </c:forEach>
                     </tbody>
                 </table>
+                <!-- table ends -->
             </div>
         
-            <!-- addApplication start -->
-            <div class="modal fade" id="addApplication" tabindex="-1">
+            <!-- add contact start -->
+            <div class="modal fade" id="addContact" tabindex="-1">
                 <div class="modal-dialog">
                     <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Add new application</h5>
+                        <h5 class="modal-title">Add new contact</h5>
                     </div>
                     <div class="modal-body">
-                        <form:form method="post" action="/applications" modelAttribute="application">
+                        <form:form method="post" action="/contacts" modelAttribute="contact">
                             <p id="modalError" class="hiddenData"><c:out value="${error}"/></p>
                             <form:input path="status" type="hidden" value="submitted"/>
                             <div class="form-group">
-                                <form:label path="companyName" for="companyName" class="col-form-label">Company Name*:</form:label>
-                                <form:input path="companyName" type="text" class="form-control" id="companyName"/>
-                                <form:errors path="companyName" class="red"/>
+                                <form:label path="name" for="name" class="col-form-label">Name*:</form:label>
+                                <form:input path="name" type="text" class="form-control" id="name"/>
+                                <form:errors path="name" class="red"/>
                             </div>
                             <div class="form-group">
-                                <form:label path="jobPostLink" for="jobPostLink" class="col-form-label">Job Post Link:</form:label>
-                                <form:input path="jobPostLink" type="text" class="form-control" id="jobPostLink"/>
+                                <form:label path="number" for="number" class="col-form-label">Number:</form:label>
+                                <form:input path="number" type="text" class="form-control" id="number"/>
                             </div>
                             <div class="form-group">
-                                <form:label path="dateOfSubmission" for="dateOfSubmission" class="col-form-label">Date of Submission*:</form:label>
-                                <form:input path="dateOfSubmission" type="date" class="form-control" id="dateOfSubmission"/>
-                                <form:errors path="dateOfSubmission" class="red"/>
+                                <form:label path="email" for="email" class="col-form-label">Email:</form:label>
+                                <form:input path="email" type="email" class="form-control" id="email"/>
+                                <form:errors path="email" class="red"/>
                             </div>
                             <div class="form-group">
-                                <form:label path="jobTitle" for="jobTitle" class="col-form-label">Job Title*:</form:label>
-                                <form:input path="jobTitle" type="text" class="form-control" id="jobTitle"/>
-                                <form:errors path="jobTitle" class="red"/>
+                                <form:label path="linkedIn" for="linkedIn" class="col-form-label">LinkedIn:</form:label>
+                                <form:input path="linkedIn" type="text" class="form-control" id="linkedIn"/>
+                                <form:errors path="linkedIn" class="red"/>
                             </div>
                             <div class="form-group">
-                                <form:label path="city" for="city" class="col-form-label">City:</form:label>
-                                <form:input path="city" type="text" class="form-control" id="city"/>
-                            </div>
-                            <div class="form-group">
-                                <form:label path="state" for="state" class="col-form-label">State:</form:label>
-                                <form:input path="state" type="text" class="form-control" id="state"/>
-                            </div>
-                            <div class="form-group">
-                                <form:label path="resumeLink" for="resumeLink" class="col-form-label">Resume Link:</form:label>
-                                <form:input path="resumeLink" type="text" class="form-control" id="resumeLink"/>
-                            </div>
-                            <div class="form-group">
-                                <form:label path="coverLetterLink" for="coverLetterLink" class="col-form-label">Cover Letter Link:</form:label>
-                                <form:input path="coverLetterLink" type="text" class="form-control" id="coverLetterLink"/>
-                            </div>
-                            <div class="form-group">
-                                <form:label path="coverLetter" for="coverLetter" class="col-form-label">Cover Letter:</form:label>
-                                <form:textarea path="coverLetter" class="form-control" id="coverLetter"></form:textarea>
+                                <form:label path="description" for="description" class="col-form-label">Description:</form:label>
+                                <form:textarea path="description" class="form-control" id="description"></form:textarea>
                             </div>
                             <div class="form-group formBtnDiv">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -354,7 +278,7 @@
                     </div>
                 </div>
             </div>
-            <!-- addApplication ends -->
+            <!-- add contact ends -->
 
             
             <!-- change weekly goal modal form starts -->

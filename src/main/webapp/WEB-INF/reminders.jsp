@@ -13,6 +13,7 @@
         <link rel="stylesheet" href="/css/reminders.css">
     </head>
     <body>
+        <!-- nav bar starts -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand" href="/dashboard">Job Search Tracker</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -26,9 +27,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/events">Networking Events</a>
                 </li>
-                <!-- <li class="nav-item">
-                    <a class="nav-link" href="#">Contacts</a>
-                </li> -->
+                <li class="nav-item">
+                    <a class="nav-link" href="/contacts">Contacts</a>
+                </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="#">Reminders(<c:if test="${reminders.size()>0}"><span class="red"><c:out value="${reminders.size()}"/></span></c:if><c:if test="${reminders.size()<=0}">0</c:if>)</a>
                 </li>
@@ -40,6 +41,7 @@
                 <a href="/logout" class="btn btn-outline-danger my-2 my-sm-0">Logout</a>
             </div>
         </nav>
+        <!-- nav bar ends -->
 
         <div id="bodyWrapper">
 
