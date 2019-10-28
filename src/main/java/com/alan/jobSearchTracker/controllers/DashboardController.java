@@ -53,7 +53,6 @@ public class DashboardController {
 			List<Reminder> reminders = reminderService.findActiveReminders(userId);
 			session.setAttribute("reminders", reminders);
 			
-			
 			Calendar m = Calendar.getInstance();
 			m.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
 			
@@ -184,7 +183,29 @@ public class DashboardController {
 		return "filterAppResults.jsp";
 	}
 	
+	//render shareLink
 	
+	@RequestMapping("/shareLink")
+	public String shareLinkPage(@RequestParam(value = "userId", required = true) Long userId, @RequestParam(value = "email", required = true) String email, HttpSession session) {
+		
+		//validation
+		
+		User u = userService.findUserById(userId);
+		String userEmail = u.getEmail();
+		
+		if (!userEmail.equals(email)) {
+			return "redirect:/login";
+		}
+		
+		//render page
+		
+		session.setAttribute("user", u);
+		List<Application> apps = appService.findAppsByCreatedDesc(userId);
+		session.setAttribute("apps", apps);
+		
+		return "guestDashboard.jsp";
+		
+	}
 	
 	
 	
