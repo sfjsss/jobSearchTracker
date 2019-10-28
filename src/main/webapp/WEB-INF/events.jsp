@@ -50,7 +50,7 @@
                     <h5>You have attended <span class="specialBlue"><c:out value="${user.events.size()}"/> events</span> in total. Add a new event</h5>
                     <button class="btn btn-success" type="button" data-toggle="modal" data-target="#addEvent">Add Event</button>
                     <h5>or share your progress through a generated link</h5>
-                    <a href="#" class="btn btn-primary">Link</a>
+                    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#shareLink">Link</a>
                 </div>
                 <div id="progressBars">
                     
@@ -318,6 +318,22 @@
                 </div>
             </div>
             <!-- change weekly goal modal form ends-->
+
+            <!-- share link starts -->
+            <div class="modal fade" id="shareLink" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Share your progress with this link</h5>
+                    </div>
+                    <div class="modal-body">
+                        <input type="text" value="localhost:8080/shareLink?userId=${user.id}&email=${user.email}" class="form-control">
+                    </div>
+                    
+                    </div>
+                </div>
+            </div>
+            <!-- share link ends-->
 
         </div>
 
