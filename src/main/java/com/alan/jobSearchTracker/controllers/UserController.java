@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.alan.jobSearchTracker.models.User;
 import com.alan.jobSearchTracker.services.UserService;
+import com.alan.jobSearchTracker.validators.UpdateUserValidator;
 import com.alan.jobSearchTracker.validators.UserValidator;
 
 @Controller
@@ -21,10 +22,12 @@ public class UserController {
 	
 	private final UserValidator userValidator;
 	private final UserService userService;
+	private final UpdateUserValidator updateUserValidator;
 	
-	public UserController(UserValidator userValidator, UserService userService) {
+	public UserController(UserValidator userValidator, UserService userService, UpdateUserValidator updateUserValidator) {
 		this.userValidator = userValidator;
 		this.userService = userService;
+		this.updateUserValidator = updateUserValidator;
 	}
 
 	@RequestMapping("/")
@@ -79,4 +82,50 @@ public class UserController {
 		session.setAttribute("user", null);
 		return "redirect:/login";
 	}
+	
+	//setting
+	
+	@RequestMapping("/setting")
+	public String setting(HttpSession session, @ModelAttribute("user") User user, Model model) {
+		
+		//check login status
+		
+		if (session.getAttribute("userId") == null) {
+			return "redirect:/login";
+		}
+		
+		//retrieve the user to update and put it in model
+		
+		User u = userService.findUserById((Long) session.getAttribute("userId"));
+		model.addAttribute("user", u);
+		
+		return "setting.jsp";
+	}
+	
+	//update user setting
+	
+	@RequestMapping(value = "/updateUser", method = RequestMethod.POST)
+	public String updateUser(@Valid @ModelAttribute("user") User user, BindingResult result) {
+		updateUserValidator.validate(user, result);
+		if (result.hasErrors()) {
+			return "setting.jsp";
+		}
+		else {
+			userService.registerUser(user);
+			return "redirect:/dashboard";
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

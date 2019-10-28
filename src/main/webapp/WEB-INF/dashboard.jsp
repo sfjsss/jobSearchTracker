@@ -37,7 +37,7 @@
                 <ul class="navbar-nav ml-auto mr-5">
                     <li class="nav-item">Welcome, <c:out value="${user.firstName}!"/></li>
                 </ul>
-                <a href="#" class="btn btn-primary my-2 my-sm-0 mr-2">Setting</a>
+                <a href="/setting" class="btn btn-primary my-2 my-sm-0 mr-2">Setting</a>
                 <a href="/logout" class="btn btn-outline-danger my-2 my-sm-0">Logout</a>
             </div>
         </nav>
