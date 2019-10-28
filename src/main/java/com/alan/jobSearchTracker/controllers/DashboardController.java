@@ -139,10 +139,11 @@ public class DashboardController {
 	}
 	
 	@RequestMapping(value = "/searchApplications", method = RequestMethod.POST)
-	public String searchApplications(@RequestParam("keyword") String keyword, RedirectAttributes ra) {
+	public String searchApplications(@RequestParam("keyword") String keyword, RedirectAttributes ra, HttpServletRequest request) {
 		if (keyword.equals("")) {
 			ra.addFlashAttribute("searchError", "this field cannot be empty");
-			return "redirect:/dashboard";
+			String referer = request.getHeader("referer");
+			return "redirect:" + referer;
 		}
 		else {
 			return "redirect:/filterAppResults?keyword=" + keyword;

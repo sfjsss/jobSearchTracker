@@ -1,5 +1,6 @@
 package com.alan.jobSearchTracker.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -166,4 +167,52 @@ public class ContactController {
 		
 		
 	}
+	
+	//generate the search link
+	
+	@RequestMapping(value = "/searchContacts", method = RequestMethod.POST)
+	public String searchContacts(@RequestParam("keyword") String keyword, RedirectAttributes ra, HttpServletRequest request) {
+		
+		if (keyword.equals("")) {
+			ra.addFlashAttribute("searchError", "this field cannot be empty");
+			String referer = request.getHeader("referer");
+			return "redirect:" + referer;
+		}
+		else {
+			return "redirect:/filterContactResults?keyword=" + keyword;
+		}
+	}
+	
+	//render search results
+	
+	@RequestMapping("/filterContactResults")
+	public String filterContactResults(@RequestParam(value = "keyword", required = true) String keyword, HttpSession session, @ModelAttribute("contact") Contact contact) {
+		
+		//validation on user's login status
+		
+		if (session.getAttribute("userId") == null) {
+			return "redirect:/login";
+		}
+		
+		//retrieve the user's id
+		
+		Long userId = (Long) session.getAttribute("userId");
+		
+		//retrieve the search results
+		
+		List<Contact> searchResults = new ArrayList<Contact>();
+		searchResults = contactService.findContactsByKeyword(userId, keyword);
+		
+		//render the search results
+		
+		session.setAttribute("contacts", searchResults);
+		
+		return "contacts.jsp";
+	}
+	 
+	
+	
+	
+	
+	
 }

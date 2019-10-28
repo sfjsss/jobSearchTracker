@@ -70,6 +70,7 @@
 
             <div id="content">
                 <p class="red"><c:out value="${filterError}"/></p>
+                <p class="red" id="searchError"><c:out value="${searchError}"/></p>
                 <div id="filtersAndSearch">
                     <!-- filter start -->
                     <form action="/filterApplications" method="POST" class="form-inline">
