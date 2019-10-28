@@ -45,6 +45,6 @@ public class EventService {
 	}
 	
 	public List<Event> findEventsByKeyword(Long userId, String keyword) {
-		return eRepo.findByUserIdAndNameOrLocationContaining(userId, keyword, keyword);
+		return eRepo.findByUserIdAndNameOrLocationContainingOrderByCreatedAtDesc(userId, keyword, keyword);
 	}
 }

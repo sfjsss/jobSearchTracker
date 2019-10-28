@@ -45,4 +45,10 @@ public class ContactService {
 	public Contact updateContact(Contact c) {
 		return contactRepo.save(c);
 	}
+	
+	//find contacts by keyword
+	
+	public List<Contact> findContactsByKeyword(Long userId, String keyword) {
+		return contactRepo.findByUserIdAndNameContainingOrDescriptionContainingOrderByCreatedAtDesc(userId, keyword, keyword);
+	}
 }

@@ -54,13 +54,9 @@
             <!-- overview ends -->
 
             <div id="content">
-                <p class="red"><c:out value="${filterError}"/></p>
                 <p class="red" id="searchError"><c:out value="${searchError}"/></p>
-                
                 <div id="filtersAndSearch">
-                    
-
-                    <form class="form-inline my-2 my-lg-0" method="POST" action="/searchApplications">
+                    <form class="form-inline my-2 my-lg-0" method="POST" action="/searchContacts">
                         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="keyword">
                         <button class="btn btn-primary my-2 my-sm-0" type="submit">Search</button>
                     </form>
