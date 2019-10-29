@@ -392,7 +392,7 @@
                         <h5 class="modal-title">Share your progress with this link</h5>
                     </div>
                     <div class="modal-body">
-                        <input type="text" value="http://34.219.249.165:8080/shareLink?userId=${user.id}&email=${user.email}" class="form-control">
+                        <input type="text" value="http://54.186.205.190:8080/shareLink?userId=${user.id}&email=${user.email}" class="form-control">
                     </div>
                     
                     </div>
