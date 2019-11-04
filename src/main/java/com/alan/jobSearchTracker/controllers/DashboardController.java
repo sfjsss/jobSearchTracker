@@ -55,6 +55,10 @@ public class DashboardController {
 			
 			Calendar m = Calendar.getInstance();
 			m.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+			m.set(Calendar.HOUR_OF_DAY, 0);
+			m.set(Calendar.MINUTE, 0);
+			m.set(Calendar.SECOND, 0);
+			m.set(Calendar.MILLISECOND, 0);
 			
 			List<Application> thisWeekApps = new ArrayList<Application>();
 			
