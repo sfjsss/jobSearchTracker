@@ -36,6 +36,11 @@ public class ReminderController {
 	
 	@RequestMapping("/reminders")
 	public String reminders(HttpSession session) {
+		if (session.getAttribute("userId") == null) {
+			return "redirect:/login";
+		}
+		
+		
 		List<Reminder> reminders = reminderService.findActiveReminders((Long) session.getAttribute("userId"));
 		session.setAttribute("reminders", reminders);
 		return "reminders.jsp";
@@ -87,6 +92,11 @@ public class ReminderController {
 	
 	@RequestMapping("/clearReminder/{reminderId}")
 	public String clearReminder(@PathVariable("reminderId") Long id, HttpSession session) {
+		if (session.getAttribute("userId") == null) {
+			return "redirect:/login";
+		}
+		
+		
 		if (session.getAttribute("userId") != null) {
 			reminderService.destroyReminder(id);
 		}
