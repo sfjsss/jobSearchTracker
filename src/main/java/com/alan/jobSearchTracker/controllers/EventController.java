@@ -54,8 +54,16 @@ public class EventController {
 		
 		Calendar m = Calendar.getInstance();
 		m.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+		m.set(Calendar.HOUR_OF_DAY, 0);
+		m.set(Calendar.MINUTE, 0);
+		m.set(Calendar.SECOND, 0);
+		m.set(Calendar.MILLISECOND, 0);
 		Calendar s = Calendar.getInstance();
 		s.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
+		s.set(Calendar.HOUR_OF_DAY, 0);
+		s.set(Calendar.MINUTE, 0);
+		s.set(Calendar.SECOND, 0);
+		s.set(Calendar.MILLISECOND, 0);
 		
 		List<Event> thisWeekEvents = new ArrayList<Event>();
 		
