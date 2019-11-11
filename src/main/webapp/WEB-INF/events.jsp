@@ -47,7 +47,7 @@
 
             <div id="overview">
                 <div id="statsAndShare">
-                    <h5>You have attended <span class="specialBlue"><c:out value="${user.events.size()}"/> events</span> in total. Add a new event</h5>
+                    <h5>You have added <span class="specialBlue"><c:out value="${user.events.size()}"/> events</span> in total. Add a new event</h5>
                     <button class="btn btn-success" type="button" data-toggle="modal" data-target="#addEvent">Add Event</button>
                     <h5>or share your progress through a generated link</h5>
                     <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#shareLink">Link</a>
