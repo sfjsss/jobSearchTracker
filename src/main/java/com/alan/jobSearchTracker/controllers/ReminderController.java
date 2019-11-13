@@ -1,6 +1,7 @@
 package com.alan.jobSearchTracker.controllers;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -52,8 +53,13 @@ public class ReminderController {
 		//validation
 		
 		boolean validation = true;
-		Date rd = new Date();
-		Date today = new Date();
+		Date rdid = new Date();
+		Calendar rd = Calendar.getInstance();
+		Calendar today = Calendar.getInstance();
+		today.set(Calendar.HOUR_OF_DAY, 0);
+		today.set(Calendar.MINUTE, 0);
+		today.set(Calendar.SECOND, 0);
+		today.set(Calendar.MILLISECOND, 0);
 		
 		if (message.length() < 1) {
 			ra.addFlashAttribute("messageError", "this field cannot be empty");
@@ -65,8 +71,9 @@ public class ReminderController {
 			validation = false;
 		}
 		else {
-			rd = new SimpleDateFormat("yyyy-MM-dd").parse(remindDate);
-			if (rd.compareTo(today) <= 0) {
+			rdid = new SimpleDateFormat("yyyy-MM-dd").parse(remindDate);
+			rd.setTime(rdid);
+			if (rd.compareTo(today) < 0) {
 				ra.addFlashAttribute("remindDateError", "please enter a valid date");
 				validation = false;
 			}
@@ -76,7 +83,7 @@ public class ReminderController {
 			User u = userService.findUserById((Long) session.getAttribute("userId"));
 			Application a = appService.findApplication(appId);
 			Reminder r = new Reminder();
-			r.setReminderDate(rd);
+			r.setReminderDate(rdid);
 			r.setMessage(message);
 			r.setApplication(a);
 			r.setUser(u);
